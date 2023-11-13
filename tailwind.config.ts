@@ -23,6 +23,7 @@ const config: Config = {
         light: '#E4EBFA',
         dark: '#3E3F4E',
       },
+
       white: '#FFFFFF',
       transparent: 'transparent',
       red: {
@@ -31,11 +32,44 @@ const config: Config = {
       },
     },
     fontSize: {
-      base:'[2rem,1.4375rem]',
-      xl: '[1.5rem,1.25em]',
-      lg: '[1.125rem,1.25em]',
-      md: '[0.9375rem,1.25em]',
-      sm: '[0.75rem,1.25em]',
+      xl: [
+        '1.5rem',
+        {
+          fontWeight: '700',
+        },
+      ],
+      lg: [
+        '1.125rem',
+        {
+          fontWeight: '700',
+        },
+      ],
+      md: [
+        '0.9375rem',
+        {
+          fontWeight: '700',
+        },
+      ],
+      sm: [
+        '0.75rem',
+        {
+          fontWeight: '700',
+          letterSpacing: '2.4px',
+        },
+      ],
+      base: [
+        '0.8125rem',
+        {
+          lineHeight: '1.4375rem',
+          fontWeight: '500',
+        },
+      ],
+      xs: [
+        '0.75rem',
+        {
+          fontWeight: '700',
+        },
+      ],
     },
   },
   plugins: [],
