@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 function LoginPage() {
   return (
-    <div className='flex flex-col gap-10 md:p-10 md:bg-grey-light md:shadow-md md:rounded-lg'>
+    <div className='flex flex-col gap-10 md:p-10 md:bg-grey-light md:rounded-lg'>
       <div className='space-y-3'>
         <h2 className='text-xl text-black'>Login</h2>
         <p className='text-md text-grey-medium'>
