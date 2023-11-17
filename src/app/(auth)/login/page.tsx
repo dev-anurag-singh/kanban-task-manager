@@ -1,3 +1,4 @@
+import { signIn } from '@/lib/actions/auth-actions';
 import Link from 'next/link';
 
 function LoginPage() {
@@ -10,7 +11,7 @@ function LoginPage() {
         </p>
       </div>
       <div>
-        <form className='flex flex-col gap-6'>
+        <form action={signIn} className='flex flex-col gap-6'>
           <Input type='email' name='email' label='Email Address' />
           <Input type='password' name='password' label='Password' />
           <div className='flex flex-col'>
@@ -43,11 +44,12 @@ const Input = ({
 }) => {
   return (
     <div className='flex flex-col gap-2'>
-      <label className='text-sm text-grey-medium font-bold'>{label}</label>
+      <label className='text-xs text-grey-medium'>{label}</label>
       <input
         type={type}
         name={name}
-        className='px-4 py-2 border outline-none font-semibold border-grey-medium border-opacity-25 rounded-lg text-base'
+        required
+        className='px-4 py-2 border outline-none text-base font-semibold border-grey-medium border-opacity-25 rounded-lg'
       />
     </div>
   );
