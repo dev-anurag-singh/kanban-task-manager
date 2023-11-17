@@ -1,6 +1,16 @@
 import { LogoFull } from '@/components/Logo';
+import supabase from '@/lib/supabase/serverClient';
+import {redirect} from 'next/navigation'
 
-function AuthLayout({ children }: { children: React.ReactNode }) {
+async function AuthLayout({ children }: { children: React.ReactNode }) {
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  if (session) {
+    redirect('/app');
+  }
+
   return (
     <div className='p-8 flex flex-col md:min-h-screen md:items-center md:justify-center'>
       <div className='flex flex-col gap-16 md:items-center'>
