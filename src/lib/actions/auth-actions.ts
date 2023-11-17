@@ -3,7 +3,10 @@ import z from 'zod';
 import supabase from '../supabase/serverClient';
 import { redirect } from 'next/navigation';
 
-export async function signIn(formData: FormData) {
+export async function signIn(
+  prevState: string | undefined,
+  formData: FormData
+) {
   const parsedCredentials = z
     .object({ email: z.string().email(), password: z.string().min(6) })
     .safeParse({
@@ -11,7 +14,9 @@ export async function signIn(formData: FormData) {
       password: formData.get('password'),
     });
 
-  if (!parsedCredentials.success) return;
+  if (!parsedCredentials.success) {
+    return 'Parsing Failed';
+  }
 
   const { email, password } = parsedCredentials.data;
 
@@ -20,7 +25,9 @@ export async function signIn(formData: FormData) {
     password,
   });
 
-  if (data.user?.role === 'authenticated') {
-    redirect('/app');
+  if (error) {
+    return 'Invalid Credentials';
   }
+
+  redirect('/app');
 }
