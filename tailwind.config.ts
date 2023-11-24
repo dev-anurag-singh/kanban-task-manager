@@ -36,18 +36,21 @@ const config: Config = {
         '1.5rem',
         {
           fontWeight: '700',
+          lineHeight: 'normal',
         },
       ],
       lg: [
         '1.125rem',
         {
           fontWeight: '700',
+          lineHeight: 'normal',
         },
       ],
       md: [
         '0.9375rem',
         {
           fontWeight: '700',
+          lineHeight: 'normal',
         },
       ],
       sm: [
@@ -55,6 +58,7 @@ const config: Config = {
         {
           fontWeight: '700',
           letterSpacing: '2.4px',
+          lineHeight: 'normal',
         },
       ],
       base: [
@@ -68,6 +72,7 @@ const config: Config = {
         '0.75rem',
         {
           fontWeight: '700',
+          lineHeight: 'normal',
         },
       ],
     },
