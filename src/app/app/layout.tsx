@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation';
 import supabase from '@/lib/supabase/serverClient';
+import Navbar from '@/components/Navbar';
 
 async function AppLayout({ children }: { children: React.ReactNode }) {
   // REDIRECTING UNAUTHENTICATED USER
@@ -12,7 +13,16 @@ async function AppLayout({ children }: { children: React.ReactNode }) {
   }
   //
 
-  return <>{children}</>;
+  return (
+    <div>
+      <div>
+        <div>
+          <Navbar />
+        </div>
+        <div>{children}</div>
+      </div>
+    </div>
+  );
 }
 
 export default AppLayout;
