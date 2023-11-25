@@ -7,7 +7,7 @@ import { useState } from 'react';
 function Sidebar() {
   const variants = {
     open: { opacity: 1, 'margin-left': 0 },
-    closed: { opacity: 1, 'margin-left': 'calc(var(--sidebar-width)* -1)' },
+    closed: { opacity: 0, 'margin-left': 'calc(var(--sidebar-width)* -1)' },
   };
 
   const [isOpen, setIsOpen] = useState(true);
