@@ -20,7 +20,7 @@ async function AppLayout({ children }: { children: React.ReactNode }) {
       <div className='border-b border-lines-light'>
         <Navbar />
       </div>
-      <div className='flex relative'>
+      <div className='flex'>
         <Sidebar />
         <div className='bg-grey-light grow px-4 py-6 flex'>{children}</div>
       </div>
