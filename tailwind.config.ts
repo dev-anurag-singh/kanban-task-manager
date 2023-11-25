@@ -7,6 +7,11 @@ const config: Config = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    extend: {
+      gridTemplateRows: {
+        layout: 'auto 1fr',
+      },
+    },
     colors: {
       purple: {
         dark: '#635FC7',
