@@ -1,87 +1,88 @@
-import type { Config } from 'tailwindcss';
+import type { Config } from "tailwindcss";
 
 const config: Config = {
   content: [
-    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
       gridTemplateRows: {
-        layout: 'auto 1fr',
+        layout: "auto 1fr",
       },
     },
     colors: {
       purple: {
-        dark: '#635FC7',
-        light: '#A8A4FF',
+        dark: "#635FC7",
+        light: "#A8A4FF",
       },
-      black: '#000112',
+      black: "#000112",
       grey: {
-        darkest: '#20212c',
-        dark: '#2B2B37',
-        medium: '#828FA3',
-        light: '#FAF7FD',
+        darkest: "#20212c",
+        dark: "#2B2B37",
+        medium: "#828FA3",
+        light: "#FAF7FD",
       },
       lines: {
-        light: '#E4EBFA',
-        dark: '#3E3F4E',
+        light: "#E4EBFA",
+        dark: "#3E3F4E",
       },
 
-      white: '#FFFFFF',
-      transparent: 'transparent',
+      white: "#FFFFFF",
+      transparent: "transparent",
       red: {
-        dark: '#EA5555',
-        light: '#FF9898',
+        dark: "#EA5555",
+        light: "#FF9898",
       },
     },
     fontSize: {
       xl: [
-        '1.5rem',
+        "1.5rem",
         {
-          fontWeight: '700',
-          lineHeight: 'normal',
+          fontWeight: "700",
+          lineHeight: "normal",
         },
       ],
       lg: [
-        '1.125rem',
+        "1.125rem",
         {
-          fontWeight: '700',
-          lineHeight: 'normal',
+          fontWeight: "700",
+          lineHeight: "normal",
         },
       ],
       md: [
-        '0.9375rem',
+        "0.9375rem",
         {
-          fontWeight: '700',
-          lineHeight: 'normal',
+          fontWeight: "700",
+          lineHeight: "normal",
         },
       ],
       sm: [
-        '0.75rem',
+        "0.75rem",
         {
-          fontWeight: '700',
-          letterSpacing: '2.4px',
-          lineHeight: 'normal',
+          fontWeight: "700",
+          letterSpacing: "2.4px",
+          lineHeight: "normal",
         },
       ],
       base: [
-        '0.8125rem',
+        "0.8125rem",
         {
-          lineHeight: '1.4375rem',
-          fontWeight: '500',
+          lineHeight: "1.4375rem",
+          fontWeight: "500",
         },
       ],
       xs: [
-        '0.75rem',
+        "0.75rem",
         {
-          fontWeight: '700',
-          lineHeight: 'normal',
+          fontWeight: "700",
+          lineHeight: "normal",
         },
       ],
     },
   },
   plugins: [],
+  darkMode: "class",
 };
 export default config;
