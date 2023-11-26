@@ -66,7 +66,7 @@ function Sidebar({
             <div
               onClick={() => setIsDark((state) => !state)}
               className={clsx(
-                ` flex h-5 w-10 cursor-pointer justify-start rounded-xl bg-purple-dark p-[3px] `,
+                ` flex h-5 w-10 cursor-pointer justify-start rounded-xl bg-purple-dark p-[3px] transition-colors hover:bg-purple-light `,
                 {
                   "justify-end": isDark,
                 },
