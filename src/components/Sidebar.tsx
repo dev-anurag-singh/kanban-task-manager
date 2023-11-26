@@ -22,8 +22,8 @@ function Sidebar({
   }>;
 }) {
   const variants = {
-    open: { opacity: 1, "margin-left": 0 },
-    closed: { opacity: 0, "margin-left": "calc(var(--sidebar-width)* -1)" },
+    open: { marginLeft: 0 },
+    closed: { marginLeft: "calc(var(--sidebar-width)* -1)" },
   };
 
   const [isOpen, setIsOpen] = useState(true);
@@ -37,7 +37,7 @@ function Sidebar({
         animate={isOpen ? "open" : "closed"}
         variants={variants}
         transition={{ duration: 0.5 }}
-        className="hidden basis-64 flex-col gap-5 overflow-hidden border-r border-lines-light bg-white py-8 md:flex lg:basis-80"
+        className="hidden basis-64 flex-col gap-5 overflow-hidden border-r border-lines-light bg-white py-8 transition-colors dark:border-lines-dark dark:bg-grey-dark md:flex lg:basis-80"
       >
         <h4 className="ml-6 text-sm uppercase text-grey-medium lg:ml-8">
           All Boards (3)
@@ -60,17 +60,13 @@ function Sidebar({
             </Link>
           ))}
         </div>
-        <div className="mx-3 grid place-content-center rounded-md bg-grey-light py-4 lg:mx-6">
+        {/* Dark Mode Toggle */}
+        <div className="mx-3 grid place-content-center rounded-md bg-grey-light py-4 transition-colors dark:bg-grey-darkest lg:mx-6">
           <div className="flex items-center gap-6">
             <SunIcon />
             <div
-              onClick={() => setIsDark((state) => !state)}
-              className={clsx(
-                ` flex h-5 w-10 cursor-pointer justify-start rounded-xl bg-purple-dark p-[3px] transition-colors hover:bg-purple-light `,
-                {
-                  "justify-end": isDark,
-                },
-              )}
+              onClick={() => document.documentElement.classList.toggle("dark")}
+              className={` flex h-5 w-10 cursor-pointer justify-start rounded-xl bg-purple-dark p-[3px] transition-colors hover:bg-purple-light dark:justify-end`}
             >
               <motion.div
                 layout
@@ -85,14 +81,16 @@ function Sidebar({
             <MoonIcon />
           </div>
         </div>
+        {/* Hide sidebar button */}
         <button
           onClick={() => setIsOpen(false)}
-          className="mr-5 flex items-center gap-4 rounded-r-full px-6 py-4 text-md text-grey-medium transition-colors hover:bg-purple-dark hover:bg-opacity-10 hover:text-purple-dark lg:mr-6 lg:px-8"
+          className="mr-5 flex items-center gap-4 rounded-r-full px-6 py-4 text-md text-grey-medium transition-colors hover:bg-purple-dark hover:bg-opacity-10 hover:text-purple-dark dark:bg-opacity-100 dark:hover:bg-white lg:mr-6 lg:px-8"
         >
           <IconEye />
           Hide Sidebar
         </button>
       </motion.div>
+      {/* Open sidebar button */}
       {!isOpen && (
         <motion.button
           initial={{ x: "-100%" }}

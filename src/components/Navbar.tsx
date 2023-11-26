@@ -7,7 +7,7 @@ import Button from "./Button";
 function Navbar() {
   return (
     <nav className="flex">
-      <div className="hidden items-center border-r border-lines-light  pl-6 md:flex md:w-64 lg:w-80 lg:p-8">
+      <div className="hidden items-center border-r border-lines-light pl-6 transition-colors  dark:border-lines-dark md:flex md:w-64 lg:w-80 lg:p-8">
         <LogoFull />
       </div>
       <div className="flex grow items-center gap-4 p-4 md:px-6 ">
@@ -15,7 +15,7 @@ function Navbar() {
           <LogoSmall />
         </div>
         <div className="mr-auto flex">
-          <h4 className="text-lg">Platform Launch</h4>
+          <h4 className="text-lg dark:text-white">Platform Launch</h4>
           <span className="grid cursor-pointer place-content-center p-2 md:hidden">
             <ArrowDown />
           </span>
