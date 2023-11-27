@@ -27,7 +27,7 @@ function Sidebar({
   };
 
   const [isOpen, setIsOpen] = useState(true);
-  const [isDark, setIsDark] = useState(false);
+
   const pathname = usePathname();
 
   return (
@@ -46,10 +46,12 @@ function Sidebar({
           {boards.map(({ title, id }) => (
             <Link
               className={clsx(
-                "flex items-center gap-3 rounded-r-full px-6 py-4 text-md capitalize text-grey-medium hover:text-purple-dark  md:mr-5 lg:mr-6 lg:px-8",
+                " flex items-center gap-3 rounded-r-full px-6 py-4 text-md capitalize text-grey-medium transition-colors md:mr-5 lg:mr-6 lg:px-8",
                 {
-                  "bg-purple-dark text-white hover:text-white":
+                  "bg-purple-dark text-white dark:bg-white dark:text-purple-dark":
                     pathname === `/app/${id}`,
+                  "hover:bg-purple-100 hover:text-purple-dark":
+                    pathname !== `/app/${id}`,
                 },
               )}
               key={id}
@@ -84,7 +86,7 @@ function Sidebar({
         {/* Hide sidebar button */}
         <button
           onClick={() => setIsOpen(false)}
-          className="mr-5 flex items-center gap-4 rounded-r-full px-6 py-4 text-md text-grey-medium transition-colors hover:bg-purple-dark hover:bg-opacity-10 hover:text-purple-dark dark:bg-opacity-100 dark:hover:bg-white lg:mr-6 lg:px-8"
+          className="hover:bg-purple-100 mr-5 flex items-center gap-4 rounded-r-full px-6 py-4 text-md text-grey-medium transition-colors hover:text-purple-dark lg:mr-6 lg:px-8"
         >
           <IconEye />
           Hide Sidebar
@@ -97,7 +99,7 @@ function Sidebar({
           animate={{ x: 0 }}
           transition={{ duration: 0.5 }}
           onClick={() => setIsOpen(true)}
-          className="absolute bottom-8 left-0 grid h-12 w-14 place-content-center rounded-r-full bg-purple-dark text-white transition-colors hover:bg-purple-light"
+          className="absolute bottom-8 left-0 hidden h-12 w-14 place-content-center rounded-r-full bg-purple-dark text-white transition-colors hover:bg-purple-light md:grid"
         >
           <IconEyeOpen />
         </motion.button>

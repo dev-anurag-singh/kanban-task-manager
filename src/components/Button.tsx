@@ -11,7 +11,7 @@ function Button({
 }) {
   const style = {
     primary: "bg-purple-dark text-white enabled:hover:bg-purple-light",
-    secondary: "bg-white text-purple-dark ",
+    secondary: "bg-white text-purple-dark hover:bg-opacity-80",
     destructive: "bg-red-dark text-white enabled:hover:bg-red-light",
     small: "py-2",
     large: "py-4 text-md",
