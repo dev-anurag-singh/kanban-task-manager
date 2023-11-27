@@ -1,13 +1,26 @@
-'use client';
-import { createPortal } from 'react-dom';
+"use client";
+import { useLayoutEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 
 function Modal() {
-  return createPortal(
-    <div className='fixed w-full h-full top-0 bg-black bg-opacity-50'>
-      <div className=' w-64 h-80 rounded-lg bg-white mt-4 ml-14'>Content</div>
-    </div>,
-    document.getElementById('content-layout') || document.body
-  );
+  const ref = useRef<Element | null>(null);
+
+  useLayoutEffect(() => {
+    ref.current = document.body;
+  }, []);
+
+  console.log("ran");
+
+  return ref?.current
+    ? createPortal(
+        <div className="fixed top-0 h-full w-full bg-black bg-opacity-50">
+          <div className=" ml-14 mt-4 h-80 w-64 rounded-lg bg-white">
+            Content
+          </div>
+        </div>,
+        ref.current,
+      )
+    : null;
 }
 
 export default Modal;

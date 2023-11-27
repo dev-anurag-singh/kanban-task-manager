@@ -3,7 +3,13 @@
 @tailwind utilities;
 
 :root {
-  --sidebar-width: 16rem;
+  --sidebar-width: 100vw;
+}
+
+@media (min-width: 48rem) {
+  :root {
+    --sidebar-width: 16rem;
+  }
 }
 
 @media (min-width: 64rem) {

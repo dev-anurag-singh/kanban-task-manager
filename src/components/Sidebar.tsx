@@ -26,7 +26,7 @@ function Sidebar({
     closed: { marginLeft: "calc(var(--sidebar-width)* -1)" },
   };
 
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   const pathname = usePathname();
 
@@ -37,7 +37,7 @@ function Sidebar({
         animate={isOpen ? "open" : "closed"}
         variants={variants}
         transition={{ duration: 0.5 }}
-        className="hidden basis-64 flex-col gap-5 overflow-hidden border-r border-lines-light bg-white py-8 transition-colors dark:border-lines-dark dark:bg-grey-dark md:flex lg:basis-80"
+        className="absolute flex h-full w-full flex-col gap-5 overflow-hidden border-lines-light bg-white py-8 transition-colors dark:border-lines-dark dark:bg-grey-dark md:static md:basis-64 md:border-r lg:basis-80"
       >
         <h4 className="ml-6 text-sm uppercase text-grey-medium lg:ml-8">
           All Boards (3)
@@ -46,7 +46,7 @@ function Sidebar({
           {boards.map(({ title, id }) => (
             <Link
               className={clsx(
-                " flex items-center gap-3 rounded-r-full px-6 py-4 text-md capitalize text-grey-medium transition-colors md:mr-5 lg:mr-6 lg:px-8",
+                " mr-5 flex items-center gap-3 rounded-r-full px-6 py-4 text-md capitalize text-grey-medium transition-colors lg:mr-6 lg:px-8",
                 {
                   "bg-purple-dark text-white dark:bg-white dark:text-purple-dark":
                     pathname === `/app/${id}`,
@@ -99,7 +99,7 @@ function Sidebar({
           animate={{ x: 0 }}
           transition={{ duration: 0.5 }}
           onClick={() => setIsOpen(true)}
-          className="absolute bottom-8 left-0 hidden h-12 w-14 place-content-center rounded-r-full bg-purple-dark text-white transition-colors hover:bg-purple-light md:grid"
+          className="absolute bottom-8 left-0 grid h-8 w-10 place-content-center rounded-r-full bg-purple-dark text-white transition-colors hover:bg-purple-light md:h-12 md:w-14"
         >
           <IconEyeOpen />
         </motion.button>
