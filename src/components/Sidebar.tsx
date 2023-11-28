@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useState } from "react";
+import { useTheme } from "next-themes";
 
 // ICONS IMPORT
 import BoardIcon from "@/icons/BoardIcon.svg";
@@ -12,7 +13,6 @@ import SunIcon from "@/icons/IconSun.svg";
 import MoonIcon from "@/icons/IconMoon.svg";
 import IconEye from "@/icons/IconEye.svg";
 import IconEyeOpen from "@/icons/IconEyeOpen.svg";
-import { useDarkMode } from "./ThemeProvider";
 
 function Sidebar({
   boards,
@@ -22,7 +22,7 @@ function Sidebar({
     id: string;
   }>;
 }) {
-  const { toggleTheme } = useDarkMode();
+  const { theme, setTheme } = useTheme();
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -71,7 +71,7 @@ function Sidebar({
           <div className="flex items-center gap-6">
             <SunIcon />
             <div
-              onClick={toggleTheme}
+              onClick={()=> setTheme(theme === 'dark' ? 'light' : 'dark')}
               className={` flex h-5 w-10 cursor-pointer justify-start rounded-xl bg-purple-dark p-[3px] transition-colors hover:bg-purple-light dark:justify-end`}
             >
               <motion.div
