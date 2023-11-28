@@ -18,7 +18,6 @@ function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   useLayoutEffect(() => {
     const theme = localStorage.getItem("theme");
-
     if (theme === "dark") {
       setIsDark(true);
     }
