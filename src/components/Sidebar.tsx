@@ -12,6 +12,7 @@ import SunIcon from "@/icons/IconSun.svg";
 import MoonIcon from "@/icons/IconMoon.svg";
 import IconEye from "@/icons/IconEye.svg";
 import IconEyeOpen from "@/icons/IconEyeOpen.svg";
+import { useDarkMode } from "./ThemeProvider";
 
 function Sidebar({
   boards,
@@ -21,14 +22,17 @@ function Sidebar({
     id: string;
   }>;
 }) {
-  const variants = {
-    open: { marginLeft: 0 },
-    closed: { marginLeft: "calc(var(--sidebar-width)* -1)" },
-  };
+  const { toggleTheme } = useDarkMode();
 
   const [isOpen, setIsOpen] = useState(false);
 
   const pathname = usePathname();
+
+  // SIDEBAR ANIMATION VARIANTS
+  const variants = {
+    open: { marginLeft: 0 },
+    closed: { marginLeft: "calc(var(--sidebar-width)* -1)" },
+  };
 
   return (
     <>
@@ -67,7 +71,7 @@ function Sidebar({
           <div className="flex items-center gap-6">
             <SunIcon />
             <div
-              onClick={() => document.documentElement.classList.toggle("dark")}
+              onClick={toggleTheme}
               className={` flex h-5 w-10 cursor-pointer justify-start rounded-xl bg-purple-dark p-[3px] transition-colors hover:bg-purple-light dark:justify-end`}
             >
               <motion.div
@@ -86,7 +90,7 @@ function Sidebar({
         {/* Hide sidebar button */}
         <button
           onClick={() => setIsOpen(false)}
-          className="hover:bg-purple-100 mr-5 flex items-center gap-4 rounded-r-full px-6 py-4 text-md text-grey-medium transition-colors hover:text-purple-dark lg:mr-6 lg:px-8"
+          className="mr-5 flex items-center gap-4 rounded-r-full px-6 py-4 text-md text-grey-medium transition-colors hover:bg-purple-100 hover:text-purple-dark lg:mr-6 lg:px-8"
         >
           <IconEye />
           Hide Sidebar
