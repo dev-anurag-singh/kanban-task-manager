@@ -9,8 +9,6 @@ function Modal() {
     ref.current = document.body;
   }, []);
 
-  console.log("ran");
-
   return ref?.current
     ? createPortal(
         <div className="fixed top-0 h-full w-full bg-black bg-opacity-50">
