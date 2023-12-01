@@ -1,5 +1,4 @@
 "use client";
-
 import { createContext, useState } from "react";
 
 const ModalContext = createContext({});
