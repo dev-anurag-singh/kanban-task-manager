@@ -30,14 +30,14 @@ async function AppLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="grid h-screen grid-cols-1 grid-rows-layout">
-      <div className="transition-colors dark:bg-grey-dark">
+      <header className="transition-colors dark:bg-grey-dark">
         <Navbar />
-      </div>
+      </header>
       <div className="relative flex">
         <Sidebar boards={boards} />
-        <div className="flex grow bg-grey-light transition-colors dark:bg-grey-darkest">
+        <main className="flex grow bg-grey-light transition-colors dark:bg-grey-darkest">
           {children}
-        </div>
+        </main>
       </div>
     </div>
   );
