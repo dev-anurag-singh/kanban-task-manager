@@ -1,9 +1,9 @@
 import { redirect } from "next/navigation";
-import supabase from "@/lib/supabase/serverClient";
-import Navbar from "@/components/Navbar";
+import supabaseServerClient from "@/lib/supabase/serverClient";
 import Sidebar from "@/components/Sidebar";
 
 async function AppLayout({ children }: { children: React.ReactNode }) {
+  const supabase = await supabaseServerClient();
   // REDIRECTING UNAUTHENTICATED USER
   const {
     data: { session },
@@ -12,31 +12,13 @@ async function AppLayout({ children }: { children: React.ReactNode }) {
   if (!session) {
     redirect("/login");
   }
-  // Dummy data later will come from server
-  const boards = [
-    {
-      id: "121",
-      title: "platform launch",
-    },
-    {
-      id: "122",
-      title: "marketing plan",
-    },
-    {
-      id: "123",
-      title: "roadmap",
-    },
-  ];
+
+  const { data: boards } = await supabase.from("boards").select("*");
 
   return (
-    <div className="grid h-screen grid-cols-1 grid-rows-layout">
-      <header className="bg-muted">
-        <Navbar />
-      </header>
-      <div className="relative flex">
-        <Sidebar boards={boards} />
-        <main className="flex grow">{children}</main>
-      </div>
+    <div className="relative flex h-screen">
+      <Sidebar boards={boards} />
+      <div className="grid grow">{children}</div>
     </div>
   );
 }

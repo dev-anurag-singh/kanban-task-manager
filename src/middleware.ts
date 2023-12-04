@@ -1,5 +1,5 @@
-import { createServerClient, type CookieOptions } from '@supabase/ssr';
-import { NextResponse, type NextRequest } from 'next/server';
+import { createServerClient, type CookieOptions } from "@supabase/ssr";
+import { NextResponse, type NextRequest } from "next/server";
 
 export async function middleware(request: NextRequest) {
   let response = NextResponse.next({
@@ -27,16 +27,11 @@ export async function middleware(request: NextRequest) {
               headers: request.headers,
             },
           });
-          response.cookies.set({
-            name,
-            value,
-            ...options,
-          });
         },
         remove(name: string, options: CookieOptions) {
           request.cookies.set({
             name,
-            value: '',
+            value: "",
             ...options,
           });
           response = NextResponse.next({
@@ -44,14 +39,9 @@ export async function middleware(request: NextRequest) {
               headers: request.headers,
             },
           });
-          response.cookies.set({
-            name,
-            value: '',
-            ...options,
-          });
         },
       },
-    }
+    },
   );
 
   await supabase.auth.getSession();
@@ -61,5 +51,5 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   // https://nextjs.org/docs/app/building-your-application/routing/middleware#matcher
-  matcher: ['/((?!api|_next/static|_next/image|.png|favicon.ico).*)'],
+  matcher: ["/((?!api|_next/static|_next/image|.png|favicon.ico).*)"],
 };

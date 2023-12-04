@@ -1,24 +1,26 @@
-'use server';
-import z from 'zod';
-import supabase from '../supabase/serverClient';
-import { redirect } from 'next/navigation';
+"use server";
+import z from "zod";
+import { redirect } from "next/navigation";
+import supabaseServerClient from "../supabase/serverClient";
 
 export async function signIn(
   prevState: string | undefined,
-  formData: FormData
+  formData: FormData,
 ) {
   const parsedCredentials = z
     .object({ email: z.string().email(), password: z.string().min(6) })
     .safeParse({
-      email: formData.get('email'),
-      password: formData.get('password'),
+      email: formData.get("email"),
+      password: formData.get("password"),
     });
 
   if (!parsedCredentials.success) {
-    return 'Parsing Failed';
+    return "Parsing Failed";
   }
 
   const { email, password } = parsedCredentials.data;
+
+  const supabase = await supabaseServerClient();
 
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
@@ -26,8 +28,8 @@ export async function signIn(
   });
 
   if (error) {
-    return 'Invalid Credentials';
+    return "Invalid Credentials";
   }
 
-  redirect('/app');
+  redirect("/app");
 }

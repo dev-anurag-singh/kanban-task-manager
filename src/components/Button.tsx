@@ -12,8 +12,9 @@ function Button({
   const style = {
     primary:
       "bg-primary text-primary-foreground enabled:hover:bg-primary-hover",
-    secondary: "bg-white text-purple-dark hover:bg-opacity-80",
-    destructive: "bg-red-dark text-white enabled:hover:bg-red-light",
+    secondary:
+      "bg-secondary text-secondary-foreground hover:bg-secondary-hover",
+    destructive: "bg-destructive text-white hover:bg-destructive-hover",
     small: "py-2",
     large: "py-4 text-md",
     medium: "px-[1.125rem] py-[10px]",
