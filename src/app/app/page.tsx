@@ -1,13 +1,13 @@
-import Button from '@/components/Button';
+import Button from "@/components/Button";
 
 function Home() {
   return (
-    <div className='basis-full grid place-items-center'>
-      <div className=' max-w-[21rem] text-center space-y-6'>
-        <p className='text-lg text-grey-medium'>
-          This board is empty. Create a new column to get started.
+    <div className="grid basis-full place-items-center">
+      <div className=" max-w-[21rem] space-y-6 text-center">
+        <p className="text-muted-foreground text-lg">
+          Create a new board to get started.
         </p>
-        <Button size='large'>+Add New Column</Button>
+        <Button size="large">+Create New Board</Button>
       </div>
     </div>
   );

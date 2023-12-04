@@ -2,18 +2,63 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --sidebar-width: 100vw;
-}
-
-@media (min-width: 48rem) {
+@layer base {
   :root {
-    --sidebar-width: 16rem;
+    --background: #f4f7fd;
+    --foreground: #000112;
+
+    --primary: #635fc7;
+    --primary-hover: #a8a4ff;
+    --primary-foreground: #ffffff;
+
+    --secondary: #efeff9;
+    --secondary-hover: #d8d7f1;
+    --secondary-foreground: #635fc7;
+
+    --muted: #ffffff;
+    --muted-foreground: #828fa3;
+
+    --destructive: #ea5555;
+    --destructive-hover: #ff9898;
+    --destructive-foreground: #ffffff;
+
+    --border: #e4ebfa;
+
+    --sidebar-width: 100vw;
+  }
+
+  .dark {
+    --background: #20212c;
+    --foreground: #ffffff;
+
+    --secondary: #ffffff;
+    --secondary-hover: #ffffffe3;
+    --secondary-foreground: #635fc7;
+
+    --muted: #2b2c37;
+    --muted-foreground: #828fa3;
+
+    --border: #3e3f4e;
+  }
+
+  @media (min-width: 48rem) {
+    :root {
+      --sidebar-width: 16rem;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    :root {
+      --sidebar-width: 20rem;
+    }
   }
 }
 
-@media (min-width: 64rem) {
-  :root {
-    --sidebar-width: 20rem;
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
   }
 }

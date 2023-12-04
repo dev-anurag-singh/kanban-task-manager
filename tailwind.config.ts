@@ -11,32 +11,32 @@ const config: Config = {
       gridTemplateRows: {
         layout: "auto 1fr",
       },
+      colors: {
+        border: "var(--border)",
+        background: "var(--background)",
+        foreground: "var(--foreground)",
+        primary: {
+          DEFAULT: "var(--primary)",
+          hover: "var(--primary-hover)",
+          foreground: "var(--primary-foreground)",
+        },
+        secondary: {
+          DEFAULT: "var(--secondary)",
+          hover: "var(--secondary-hover)",
+          foreground: "var(--secondary-foreground)",
+        },
+        destructive: {
+          DEFAULT: "var(--destructive)",
+          hover: "var(--destructive-hover)",
+          foreground: "var(--destructive-foreground)",
+        },
+        muted: {
+          DEFAULT: "var(--muted)",
+          foreground: "var(--muted-foreground)",
+        },
+      },
     },
-    colors: {
-      purple: {
-        dark: "#635FC7",
-        100: "#EFEFF9",
-        light: "#A8A4FF",
-      },
-      black: "#000112",
-      grey: {
-        darkest: "#20212c",
-        dark: "#2B2B37",
-        medium: "#828FA3",
-        light: "#FAF7FD",
-      },
-      lines: {
-        light: "#E4EBFA",
-        dark: "#3E3F4E",
-      },
 
-      white: "#FFFFFF",
-      transparent: "transparent",
-      red: {
-        dark: "#EA5555",
-        light: "#FF9898",
-      },
-    },
     fontSize: {
       xl: [
         "1.5rem",
@@ -87,3 +87,29 @@ const config: Config = {
   darkMode: "class",
 };
 export default config;
+
+//  colors: {
+//   purple: {
+//     dark: "#635FC7",
+//     100: "#EFEFF9",
+//     light: "#A8A4FF",
+//   },
+//   black: "#000112",
+//   grey: {
+//     darkest: "#20212c",
+//     dark: "#2B2B37",
+//     medium: "#828FA3",
+//     light: "#FAF7FD",
+//   },
+//   lines: {
+//     light: "#E4EBFA",
+//     dark: "#3E3F4E",
+//   },
+
+//   white: "#FFFFFF",
+//   transparent: "transparent",
+//   red: {
+//     dark: "#EA5555",
+//     light: "#FF9898",
+//   },
+// },

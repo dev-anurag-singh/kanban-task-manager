@@ -1,7 +1,7 @@
 function Button({
   type = "primary",
   size = "small",
-  disabled = false,
+  disabled,
   children,
 }: {
   type?: "primary" | "secondary" | "destructive";
@@ -10,7 +10,8 @@ function Button({
   children: React.ReactNode;
 }) {
   const style = {
-    primary: "bg-purple-dark text-white enabled:hover:bg-purple-light",
+    primary:
+      "bg-primary text-primary-foreground enabled:hover:bg-primary-hover",
     secondary: "bg-white text-purple-dark hover:bg-opacity-80",
     destructive: "bg-red-dark text-white enabled:hover:bg-red-light",
     small: "py-2",
