@@ -1,24 +1,13 @@
-import { LogoFull } from '@/components/Logo';
-import supabaseServerClient from '@/lib/supabase/serverClient';
-import {redirect} from 'next/navigation'
+import { LogoFull } from "@/components/Logo";
 
 async function AuthLayout({ children }: { children: React.ReactNode }) {
-  const supabase = await supabaseServerClient()
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-
-  if (session) {
-    redirect('/app');
-  }
-
   return (
-    <div className='p-8 flex flex-col md:min-h-screen md:items-center md:justify-center'>
-      <div className='flex flex-col gap-16 md:items-center'>
-        <div>
+    <div className="flex h-full flex-col justify-center p-6 md:items-center md:p-8 ">
+      <div className="flex flex-col gap-10 md:w-[30rem] md:gap-16">
+        <div className="flex justify-center">
           <LogoFull />
         </div>
-        <div className='md:w-[30rem]'>{children}</div>
+        <div className="">{children}</div>
       </div>
     </div>
   );
