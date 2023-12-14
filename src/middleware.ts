@@ -65,6 +65,7 @@ export async function middleware(request: NextRequest) {
       request.nextUrl.pathname === "/signup")
   ) {
     response = NextResponse.redirect(new URL("/app", request.url));
+    return response;
   }
 
   return response;
