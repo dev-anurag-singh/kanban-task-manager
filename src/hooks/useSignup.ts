@@ -9,8 +9,7 @@ export function useSignup() {
   const { mutate: signup, isPending } = useMutation({
     mutationFn: signupApi,
     onSuccess: (data) => {
-      toast("Verification email has been send.");
-      router.push('/login')
+      router.push("/login");
     },
     onError: (err) => toast.error(err.message),
   });
