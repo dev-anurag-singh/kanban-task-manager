@@ -3,6 +3,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
+import {Mail} from 'lucide-react'
 import {
   Card,
   CardContent,
@@ -38,9 +39,17 @@ function SignupPage() {
     password,
     confirmPassword,
   }: TSignUpValidator) {
-    signup({ email, password, confirmPassword },{
-      onSettled:()=> reset()
-    });
+    signup(
+      { email, password, confirmPassword },
+      {
+        onSettled: () => reset(),
+        onSuccess: () => {
+          toast('Conformation email has been send.',{
+            icon:<Mail />
+          });
+        },
+      },
+    );
   }
 
   return (
