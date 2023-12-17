@@ -6,6 +6,7 @@ import { useState } from "react";
 import IconEye from "@/icons/IconEye.svg";
 import IconEyeOpen from "@/icons/IconEyeOpen.svg";
 import { LogoFull } from "../Logo";
+
 import NavItems from "./NavItems";
 import ThemeToggler from "./ThemeToggler";
 
@@ -25,7 +26,7 @@ function Sidebar({ boards }: { boards?: any[] | null }) {
         animate={isOpen ? "open" : "closed"}
         variants={variants}
         transition={{ duration: 0.5 }}
-        className="hidden h-full w-full basis-64 flex-col gap-5 overflow-hidden border-r bg-muted py-8 text-muted-foreground md:flex lg:basis-80"
+        className="hidden shrink-0 basis-64 flex-col gap-5 overflow-hidden border-r bg-muted py-8 text-muted-foreground md:flex lg:basis-80"
       >
         <Link
           href="/"
