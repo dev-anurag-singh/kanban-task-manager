@@ -18,12 +18,10 @@ import {
   SignInValidator,
   TSignInValidator,
 } from "@/lib/validators/auth-credentails-validator";
-import toast from "react-hot-toast";
-import { supabaseBrowserClient } from "@/lib/supabase/browserClient";
 import { useLogin } from "@/hooks/useLogin";
 
 function SignupPage() {
-  const {login,isPending} = useLogin()
+  const { login, isPending } = useLogin();
   const {
     register,
     handleSubmit,
@@ -34,9 +32,12 @@ function SignupPage() {
   });
 
   async function onSubmit({ email, password }: TSignInValidator) {
-      login({email,password},{
-        onSettled:()=> reset()
-      });
+    login(
+      { email, password },
+      {
+        onSettled: () => reset(),
+      },
+    );
   }
 
   return (
@@ -71,7 +72,9 @@ function SignupPage() {
             </div>
           </CardContent>
           <CardFooter className="flex-col items-stretch">
-            <Button type="submit" disabled={isPending}>Login</Button>
+            <Button type="submit" disabled={isPending}>
+              Login
+            </Button>
             <div className="mt-3 text-center text-base">
               <span>Don&apos; have an account?</span>
               <Button
