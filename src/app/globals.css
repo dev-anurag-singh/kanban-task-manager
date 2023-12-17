@@ -34,7 +34,7 @@
 
     --radius: 0.5rem;
 
-    --sidebar-width:16rem
+    --sidebar-width: 16rem;
   }
 
   .dark {
@@ -68,10 +68,9 @@
   }
 }
 
-
-@media (min-width:64rem){
-  :root{
-    --sidebar-width:20rem;
+@media (min-width: 64rem) {
+  :root {
+    --sidebar-width: 20rem;
   }
 }
 
