@@ -17,7 +17,7 @@ function NavItems({ boards }: { boards?: any[] | null }) {
           {boards.map(({ title, id }) => (
             <Link
               className={cn(
-                "relative mr-5 flex h-12 items-center gap-3 overflow-hidden rounded-r-full px-6 py-4 text-md capitalize transition-colors after:absolute after:left-0 after:top-0 after:h-full after:w-0 after:bg-secondary after:transition-all after:duration-300 hover:text-secondary-foreground hover:after:w-full lg:mr-6 lg:px-8",
+                "relative mr-5 flex h-12 items-center gap-3 overflow-hidden rounded-r-full px-6 py-4 capitalize transition-colors after:absolute after:left-0 after:top-0 after:h-full after:w-0 after:bg-secondary after:transition-all after:duration-300 hover:text-secondary-foreground hover:after:w-full lg:mr-6 lg:px-8",
                 {
                   "pointer-events-none text-primary-foreground after:w-full after:bg-primary":
                     pathname === `/app/${id}`,
@@ -29,7 +29,7 @@ function NavItems({ boards }: { boards?: any[] | null }) {
               <span className="z-10">
                 <BoardIcon />
               </span>
-              <span className="z-10 overflow-hidden text-ellipsis whitespace-nowrap break-words">
+              <span className="z-10 overflow-hidden text-ellipsis whitespace-nowrap break-words text-lg">
                 {title}
               </span>
             </Link>

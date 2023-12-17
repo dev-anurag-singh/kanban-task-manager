@@ -46,7 +46,7 @@ function Sidebar({ boards }: { boards?: any[] | null }) {
 
         <button
           onClick={() => setIsOpen(false)}
-          className="relative z-10 mr-5 flex items-center gap-4 rounded-r-full px-6 py-4 text-md transition-colors after:absolute after:left-0 after:top-0 after:-z-10 after:h-full after:w-0 after:rounded-r-full after:bg-secondary after:transition-all after:duration-300 hover:text-secondary-foreground hover:after:w-full lg:mr-6 lg:px-8"
+          className="relative z-10 mr-5 flex items-center gap-4 rounded-r-full px-6 py-4 text-lg transition-colors after:absolute after:left-0 after:top-0 after:-z-10 after:h-full after:w-0 after:rounded-r-full after:bg-secondary after:transition-all after:duration-300 hover:text-secondary-foreground hover:after:w-full lg:mr-6 lg:px-8"
         >
           <IconEye />
           Hide Sidebar
