@@ -14,7 +14,7 @@ function Provider({ children }: { children: React.ReactNode }) {
   });
 
   return (
-    <ThemeProvider enableSystem={false} attribute="class">
+    <ThemeProvider attribute="class">
       <QueryClientProvider client={queryClient}>
         <Toaster
           position="top-right"
