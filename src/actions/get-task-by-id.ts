@@ -1,13 +1,15 @@
 "use server";
+
 import supabaseServerClient from "@/lib/supabase/serverClient";
 
-export async function getColumnsByBoardId(id: string) {
+export async function getTaskById(id: string) {
   const supabase = await supabaseServerClient();
 
   const { data } = await supabase
-    .from("columns")
-    .select(`*,tasks(id)`)
-    .eq("board_id", id);
+    .from("tasks")
+    .select(`*,subtasks(*)`)
+    .eq("id", id)
+    .single();
 
   return data;
 }

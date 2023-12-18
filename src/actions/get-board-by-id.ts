@@ -7,7 +7,7 @@ export async function getBoardById(id: string) {
 
   const { data } = await supabase
     .from("boards")
-    .select(`*,columns(*)`)
+    .select(`*,columns(id)`)
     .eq("id", id)
     .single();
 
