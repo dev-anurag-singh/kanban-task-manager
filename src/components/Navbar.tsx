@@ -10,8 +10,6 @@ function Navbar({
   board: {
     title: string;
     columns: {
-      title: string;
-      order: number;
       id: string;
     }[];
   };

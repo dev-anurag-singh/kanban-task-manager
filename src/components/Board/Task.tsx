@@ -1,18 +1,26 @@
-interface TaskProps {
-  task: {
-    id: string;
-    title: string;
-    order: Number;
-  };
-}
+import { getTaskById } from "@/actions/get-task-by-id";
 
-function Task({ task }: TaskProps) {
+async function Task({ taskId }: { taskId: string }) {
+  const task = await getTaskById(taskId);
+
+  const subtasksCount = task?.subtasks.length;
+
+  const completedSubtasks = task?.subtasks.filter(
+    ({ completed }) => completed === true,
+  );
+
+  const completedSubtasksCount = completedSubtasks?.length;
+
   return (
     <div className="group w-72 cursor-pointer space-y-2 rounded-lg bg-muted px-4 py-6 shadow-md">
       <h4 className="text-lg text-foreground group-hover:text-primary">
-        {task.title}
+        {task?.title}
       </h4>
-      <p className=" text-sm text-muted-foreground">0 of 3 subtasks</p>
+      {!subtasksCount ? null : (
+        <p className=" text-sm text-muted-foreground">
+          {completedSubtasksCount} of {subtasksCount}
+        </p>
+      )}
     </div>
   );
 }

@@ -1,16 +1,8 @@
+import type { ColumnWithTasksId } from "@/lib/types";
 import Task from "./Task";
 
 interface ColumnProps {
-  column: {
-    id: string;
-    title: string;
-    order: Number;
-    tasks: {
-      id: string;
-      title: string;
-      order: Number;
-    }[];
-  };
+  column: ColumnWithTasksId
 }
 
 function Column({ column }: ColumnProps) {
@@ -24,7 +16,7 @@ function Column({ column }: ColumnProps) {
       </div>
       <div className="flex flex-col gap-5">
         {column.tasks.map((task) => (
-          <Task key={task.id} task={task} />
+          <Task key={task.id} taskId={task.id} />
         ))}
       </div>
     </div>

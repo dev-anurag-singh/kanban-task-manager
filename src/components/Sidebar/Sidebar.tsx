@@ -9,8 +9,9 @@ import { LogoFull } from "../Logo";
 
 import NavItems from "./NavItems";
 import ThemeToggler from "./ThemeToggler";
+import { Board } from "@/lib/types";
 
-function Sidebar({ boards }: { boards?: any[] | null }) {
+function Sidebar({ boards }: { boards: Board[] | null }) {
   const [isOpen, setIsOpen] = useState(true);
 
   // SIDEBAR ANIMATION VARIANTS

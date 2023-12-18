@@ -3,8 +3,9 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import BoardIcon from "@/icons/BoardIcon.svg";
+import { Board } from "@/lib/types";
 
-function NavItems({ boards }: { boards?: any[] | null }) {
+function NavItems({ boards }: { boards: Board[] | null }) {
   const pathname = usePathname();
   const boardsCount = boards?.length || 0;
   return (
