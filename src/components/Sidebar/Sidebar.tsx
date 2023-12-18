@@ -29,7 +29,7 @@ function Sidebar({ boards }: { boards?: any[] | null }) {
         className="hidden shrink-0 basis-64 flex-col gap-5 overflow-hidden border-r bg-muted py-8 text-muted-foreground md:flex lg:basis-80"
       >
         <Link
-          href="/"
+          href="/app"
           className="flex items-center p-6 pt-0 lg:w-80 lg:p-8 lg:pt-0"
         >
           <LogoFull />
