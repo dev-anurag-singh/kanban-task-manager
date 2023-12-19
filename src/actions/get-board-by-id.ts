@@ -1,15 +1,16 @@
 "use server";
 
 import supabaseServerClient from "@/lib/supabase/serverClient";
+import { cache } from "react";
 
-export async function getBoardById(id: string) {
+export const getBoardById = cache(async (id: string) => {
   const supabase = await supabaseServerClient();
 
   const { data } = await supabase
     .from("boards")
-    .select(`*,columns(id)`)
+    .select(`*,columns(*)`)
     .eq("id", id)
     .single();
 
   return data;
-}
+});
