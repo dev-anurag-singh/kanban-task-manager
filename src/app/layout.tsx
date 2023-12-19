@@ -13,6 +13,7 @@ export const metadata: Metadata = {
   },
   description:
     "Kanban style task manager to fit your all task management needs.",
+  icons: "/icon.png",
 };
 
 export default function RootLayout({

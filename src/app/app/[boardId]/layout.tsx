@@ -2,15 +2,22 @@ import { getBoardById } from "@/actions/get-board-by-id";
 import Navbar from "@/components/Navbar";
 import { notFound } from "next/navigation";
 
-async function BoardLayout({
-  children,
-  params,
-}: {
-  children: React.ReactNode;
+interface BoardLayoutProps {
   params: {
     boardId: string;
   };
-}) {
+  children: React.ReactNode;
+}
+
+export async function generateMetadata({ params }: BoardLayoutProps) {
+  const board = await getBoardById(params.boardId);
+
+  return {
+    title: board?.title,
+  };
+}
+
+async function BoardLayout({ children, params }: BoardLayoutProps) {
   const board = await getBoardById(params.boardId);
 
   if (!board) {
