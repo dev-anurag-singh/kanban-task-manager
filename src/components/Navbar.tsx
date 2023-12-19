@@ -3,17 +3,9 @@ import IconPlus from "@/icons/IconPlus.svg";
 import { Button } from "./ui/button";
 import { LogoSmall } from "./Logo";
 import Link from "next/link";
+import { BoardWithColumns } from "@/lib/types";
 
-function Navbar({
-  board,
-}: {
-  board: {
-    title: string;
-    columns: {
-      id: string;
-    }[];
-  };
-}) {
+function Navbar({ board }: { board: BoardWithColumns }) {
   const disabled = board.columns.length === 0;
 
   return (

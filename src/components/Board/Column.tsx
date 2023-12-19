@@ -1,12 +1,14 @@
-import type { ColumnWithTasksId } from "@/lib/types";
+import type { Column } from "@/lib/types";
 import Task from "./Task";
+import { getTasksByColumnId } from "@/actions/get-tasks-by-column-id";
 
 interface ColumnProps {
-  column: ColumnWithTasksId
+  column: Column;
 }
 
-function Column({ column }: ColumnProps) {
-  const tasksCount = column.tasks.length;
+async function Column({ column }: ColumnProps) {
+  const tasks = await getTasksByColumnId(column.id);
+  const tasksCount = tasks?.length;
 
   return (
     <div key={column.id} className="space-y-6">
@@ -15,9 +17,7 @@ function Column({ column }: ColumnProps) {
         <span>({tasksCount})</span>
       </div>
       <div className="flex flex-col gap-5">
-        {column.tasks.map((task) => (
-          <Task key={task.id} taskId={task.id} />
-        ))}
+        {tasks && tasks.map((task) => <Task key={task.id} task={task} />)}
       </div>
     </div>
   );

@@ -1,7 +1,8 @@
-import { getColumnsByBoardId } from "@/actions/get-columns-by-board";
+import { getBoardById } from "@/actions/get-board-by-id";
 import Column from "@/components/Board/Column";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { notFound } from "next/navigation";
 
 async function BoardPage({
   params,
@@ -10,7 +11,13 @@ async function BoardPage({
     boardId: string;
   };
 }) {
-  const columns = await getColumnsByBoardId(params.boardId);
+  const board = await getBoardById(params.boardId);
+
+  if (!board) {
+    notFound();
+  }
+
+  const { columns } = board;
 
   if (!columns || !columns.length) {
     return (
