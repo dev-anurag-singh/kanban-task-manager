@@ -1,8 +1,6 @@
-import { getBoardById } from "@/actions/get-board-by-id";
-import Column from "@/components/Board/Column";
+import { getColumnsByBoardId } from "@/actions/get-columns-by-board-id";
+import ColumnContainer from "@/components/Board/ColumnContainer";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { notFound } from "next/navigation";
 
 async function BoardPage({
   params,
@@ -11,13 +9,7 @@ async function BoardPage({
     boardId: string;
   };
 }) {
-  const board = await getBoardById(params.boardId);
-
-  if (!board) {
-    notFound();
-  }
-
-  const { columns } = board;
+  const columns = await getColumnsByBoardId(params.boardId);
 
   if (!columns || !columns.length) {
     return (
@@ -32,13 +24,7 @@ async function BoardPage({
     );
   }
 
-  return (
-    <main className={cn("flex gap-6 overflow-x-scroll p-6")}>
-      {columns.map((column) => (
-        <Column key={column.id} column={column} />
-      ))}
-    </main>
-  );
+  return <ColumnContainer columns={columns} />;
 }
 
 export default BoardPage;
