@@ -10,8 +10,5 @@ export async function getColumnsByBoardId(id: string) {
     .select(`*,tasks(*)`)
     .eq("board_id", id);
 
-    console.log(data);
-    
-
   return data;
 }
