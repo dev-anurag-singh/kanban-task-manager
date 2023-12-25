@@ -13,7 +13,7 @@ function ColumnContainer({ columns }: ColumnContainerProps) {
   const [orderedColumns, setOrderedColumns] = useState(columns);
 
   return (
-    <main className={cn("flex gap-6 overflow-x-scroll p-6")}>
+    <main className={cn("flex gap-6")}>
       {orderedColumns.map((column) => (
         <Column key={column.id} column={column} />
       ))}
