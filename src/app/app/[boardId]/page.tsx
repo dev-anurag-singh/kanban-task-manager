@@ -24,7 +24,16 @@ async function BoardPage({
     );
   }
 
-  return <ColumnContainer columns={columns} />;
+  return (
+    <div className="flex gap-6 overflow-x-scroll p-6">
+      <ColumnContainer columns={columns} />
+      <div className="grid place-content-center bg-skeleton w-72 shrink-0 rounded-md">
+        <Button variant={"link"} className="text-2xl text-muted-foreground">
+          + New Column
+        </Button>
+      </div>
+    </div>
+  );
 }
 
 export default BoardPage;

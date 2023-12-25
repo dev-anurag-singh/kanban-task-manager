@@ -25,7 +25,7 @@ async function BoardLayout({ children, params }: BoardLayoutProps) {
   }
 
   return (
-    <div className="grid grid-cols-1 grid-rows-[auto_1fr]">
+    <div className="grid grid-cols-1 grid-rows-[auto_1fr] overflow-hidden">
       <Navbar board={board} />
       {children}
     </div>

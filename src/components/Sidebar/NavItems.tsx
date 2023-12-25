@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import BoardIcon from "@/icons/BoardIcon.svg";
 import { Board } from "@/lib/types";
+import { Button } from "../ui/button";
 
 function NavItems({ boards }: { boards: Board[] | null }) {
   const pathname = usePathname();
@@ -35,6 +36,14 @@ function NavItems({ boards }: { boards: Board[] | null }) {
               </span>
             </Link>
           ))}
+          <div className="px-6 lg:px-8">
+            <Button variant="link" className="p-0">
+              <span className="mr-3">
+                <BoardIcon />
+              </span>
+              <span className="text-lg">+ Add New Board</span>
+            </Button>
+          </div>
         </div>
       )}
     </>
