@@ -1,17 +1,14 @@
-import { getAllBoards } from "@/actions/get-all-boards";
-import Sidebar from "@/components/Sidebar/Sidebar";
 import { Metadata } from "next";
+import Sidebar from "@/components/Sidebar/Sidebar";
 
 export const metadata: Metadata = {
   title: "Boards",
 };
 
-async function AppLayout({ children }: { children: React.ReactNode }) {
-  const boards = await getAllBoards();
-
+function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="relative flex h-screen">
-      <Sidebar boards={boards} />
+      <Sidebar />
       <div className="grid grow">{children}</div>
     </div>
   );

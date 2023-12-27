@@ -3,11 +3,34 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import BoardIcon from "@/icons/BoardIcon.svg";
-import { Board } from "@/lib/types";
 import { Button } from "../ui/button";
+import { Board } from "@/lib/types";
+import { useQuery } from "@tanstack/react-query";
+import { fetchBoards } from "@/services/apiBoards";
+import { Skeleton } from "../ui/skeleton";
 
-function NavItems({ boards }: { boards: Board[] | null }) {
+function NavItems() {
+  const { data: boards, isLoading } = useQuery<Board[]>({
+    queryKey: ["boards"],
+    queryFn: fetchBoards,
+  });
+
   const pathname = usePathname();
+
+  if (isLoading) {
+    return (
+      <>
+        <h4 className="ml-6 text-sm uppercase lg:ml-8">All Boards</h4>
+        <div className="mx-8 mb-auto space-y-2">
+          <Skeleton className="h-12" />
+          <Skeleton className="h-12" />
+          <Skeleton className="h-12" />
+          <Skeleton className="h-12" />
+        </div>
+      </>
+    );
+  }
+
   const boardsCount = boards?.length || 0;
   return (
     <>

@@ -2,16 +2,14 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useState } from "react";
+import NavItems from "./NavItems";
+import ThemeToggler from "./ThemeToggler";
 // ICONS IMPORT
 import IconEye from "@/icons/IconEye.svg";
 import IconEyeOpen from "@/icons/IconEyeOpen.svg";
 import { LogoFull } from "../Logo";
 
-import NavItems from "./NavItems";
-import ThemeToggler from "./ThemeToggler";
-import { Board } from "@/lib/types";
-
-function Sidebar({ boards }: { boards: Board[] | null }) {
+function Sidebar() {
   const [isOpen, setIsOpen] = useState(true);
 
   // SIDEBAR ANIMATION VARIANTS
@@ -38,7 +36,7 @@ function Sidebar({ boards }: { boards: Board[] | null }) {
 
         {/* Board List */}
 
-        <NavItems boards={boards} />
+        <NavItems/>
 
         {/* Dark Mode Toggler */}
 
