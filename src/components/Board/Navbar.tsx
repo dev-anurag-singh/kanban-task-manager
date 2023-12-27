@@ -1,9 +1,10 @@
 import EllipsisVertical from "@/icons/EllipsisVertical.svg";
 import IconPlus from "@/icons/IconPlus.svg";
-import { Button } from "./ui/button";
-import { LogoSmall } from "./Logo";
+import { Button } from "../ui/button";
+import { LogoSmall } from "../Logo";
 import Link from "next/link";
 import { BoardWithColumns } from "@/lib/types";
+import SidebarDropDown from "../Sidebar/SidebarDropDown";
 
 function Navbar({ board }: { board: BoardWithColumns }) {
   const disabled = board.columns.length === 0;
@@ -14,8 +15,9 @@ function Navbar({ board }: { board: BoardWithColumns }) {
         <Link href="/app" className="mr-4 md:hidden ">
           <LogoSmall />
         </Link>
-        <div className="mr-auto flex">
+        <div className="mr-auto flex gap-1">
           <h4 className="text-lg">{board.title}</h4>
+          <SidebarDropDown />
         </div>
         <div className="hidden md:block">
           <Button disabled={disabled} size="lg">
