@@ -1,5 +1,5 @@
 import { getBoardById } from "@/actions/get-board-by-id";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/Board/Navbar";
 import { notFound } from "next/navigation";
 
 interface BoardLayoutProps {
