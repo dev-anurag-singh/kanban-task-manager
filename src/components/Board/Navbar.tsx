@@ -15,9 +15,11 @@ function Navbar({ board }: { board: BoardWithColumns }) {
         <Link href="/app" className="mr-4 md:hidden ">
           <LogoSmall />
         </Link>
-        <div className="mr-auto flex gap-1">
+        <div className="mr-auto flex items-center gap-1">
           <h4 className="text-lg">{board.title}</h4>
-          <SidebarDropDown />
+          <div className="inline-flex md:hidden">
+            <SidebarDropDown />
+          </div>
         </div>
         <div className="hidden md:block">
           <Button disabled={disabled} size="lg">
