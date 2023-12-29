@@ -8,6 +8,7 @@ import { Board } from "@/lib/types";
 import { useQuery } from "@tanstack/react-query";
 import { fetchBoards } from "@/services/apiBoards";
 import { Skeleton } from "../ui/skeleton";
+import CreateBoard from "../Modal/CreateBoard";
 
 function NavItems() {
   const { data: boards, isLoading } = useQuery<Board[]>({
@@ -60,12 +61,7 @@ function NavItems() {
             </Link>
           ))}
           <div className="px-6 lg:px-8">
-            <Button variant="link" className="p-0">
-              <span className="mr-3">
-                <BoardIcon />
-              </span>
-              <span className="text-lg">+ Add New Board</span>
-            </Button>
+            <CreateBoard />
           </div>
         </div>
       )}
