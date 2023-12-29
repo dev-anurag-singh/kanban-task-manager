@@ -3,7 +3,6 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import BoardIcon from "@/icons/BoardIcon.svg";
-import { Button } from "../ui/button";
 import { Board } from "@/lib/types";
 import { useQuery } from "@tanstack/react-query";
 import { fetchBoards } from "@/services/apiBoards";
