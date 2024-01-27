@@ -16,8 +16,11 @@ module.exports = {
       },
     },
     extend: {
-      backgroundImage:{
+      backgroundImage: {
         column: "linear-gradient(var(--column))",
+      },
+      width: {
+        75: "18.75rem",
       },
       colors: {
         border: "hsl(var(--border))",
@@ -53,8 +56,7 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        skeleton:'hsl(var(--skeleton))'
-        
+        skeleton: "hsl(var(--skeleton))",
       },
       borderRadius: {
         lg: "var(--radius)",
