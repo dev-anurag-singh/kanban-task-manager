@@ -1,5 +1,6 @@
 import { getBoardById } from "@/actions/get-board-by-id";
 import Navbar from "@/components/Board/Navbar";
+import Sidebar from "@/components/Sidebar/Sidebar";
 import { notFound } from "next/navigation";
 
 interface BoardLayoutProps {
@@ -25,9 +26,12 @@ async function BoardLayout({ children, params }: BoardLayoutProps) {
   }
 
   return (
-    <div className="grid grid-cols-1 grid-rows-[auto_1fr] overflow-hidden">
-      <Navbar board={board} />
-      {children}
+    <div className="flex h-full">
+      <Sidebar />
+      <div className="grid grow grid-cols-1 grid-rows-[auto_1fr] overflow-hidden">
+        <Navbar board={board} />
+        {children}
+      </div>
     </div>
   );
 }
