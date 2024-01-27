@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
-import {Mail} from 'lucide-react'
+import { Mail } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -20,7 +20,6 @@ import {
   TSignUpValidator,
 } from "@/lib/validators/auth-credentails-validator";
 import toast from "react-hot-toast";
-import { supabaseBrowserClient } from "@/lib/supabase/browserClient";
 import { useSignup } from "@/hooks/useSignup";
 
 function SignupPage() {
@@ -44,8 +43,8 @@ function SignupPage() {
       {
         onSettled: () => reset(),
         onSuccess: () => {
-          toast('Conformation email has been send.',{
-            icon:<Mail />
+          toast("Conformation email has been send.", {
+            icon: <Mail />,
           });
         },
       },
