@@ -36,7 +36,7 @@ function Sidebar() {
 
         {/* Board List */}
 
-        <NavItems/>
+        <NavItems />
 
         {/* Dark Mode Toggler */}
 
@@ -61,7 +61,7 @@ function Sidebar() {
           animate={{ x: 0 }}
           transition={{ duration: 0.5 }}
           onClick={() => setIsOpen(true)}
-          className="absolute bottom-8 left-0 hidden h-12 w-14 place-content-center rounded-r-full bg-primary text-primary-foreground transition-colors hover:bg-primary/70 md:grid"
+          className="absolute bottom-8 left-0 z-10 hidden h-12 w-14 place-content-center rounded-r-full bg-primary text-primary-foreground transition-colors hover:bg-primary/70 md:grid"
         >
           <IconEyeOpen />
         </motion.button>
