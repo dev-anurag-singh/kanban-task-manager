@@ -11,9 +11,9 @@ function SidebarDropDown() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="transition-transform data-[state=open]:rotate-180">
-        <ChevronDown />
+        <ChevronDown className="-mb-0.5 h-5 w-5" />
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="md:hidden" sideOffset={30}>
+      <DropdownMenuContent className="md:hidden" sideOffset={30} side="bottom">
         <div className="flex w-64 flex-col gap-5 py-4">
           <NavItems />
           <ThemeToggler />
