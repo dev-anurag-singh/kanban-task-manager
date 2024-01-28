@@ -8,6 +8,7 @@ import ThemeToggler from "./ThemeToggler";
 import IconEye from "@/icons/IconEye.svg";
 import IconEyeOpen from "@/icons/IconEyeOpen.svg";
 import { LogoFull } from "../Logo";
+import { ScrollArea } from "../ui/scroll-area";
 
 function Sidebar() {
   const [isOpen, setIsOpen] = useState(true);
@@ -34,15 +35,13 @@ function Sidebar() {
           <LogoFull />
         </Link>
 
-        {/* Board List */}
-
-        <NavItems />
-
-        {/* Dark Mode Toggler */}
+        <ScrollArea className="min-h-[12rem] basis-full">
+          <div className="flex w-64 flex-col gap-5 lg:w-80">
+            <NavItems />
+          </div>
+        </ScrollArea>
 
         <ThemeToggler />
-
-        {/* Hide sidebar button */}
 
         <button
           onClick={() => setIsOpen(false)}
