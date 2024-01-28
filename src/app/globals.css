@@ -89,4 +89,18 @@
   body {
     @apply bg-background text-foreground;
   }
+  .list-border::before {
+    content: "";
+    border: 1px solid transparent;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    display: block;
+    right: 0;
+    top: 0;
+    transition-duration: 0.3s;
+    transition-property: border-color, box-shadow;
+    border-radius: 5px;
+    pointer-events: none;
+  }
 }

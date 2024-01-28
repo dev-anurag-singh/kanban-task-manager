@@ -13,8 +13,11 @@ async function Column({ column: { id, title, tasks } }: ColumnProps) {
   const tasksCount = columnTasks.length;
 
   return (
-    <div key={id} className="flex w-72 shrink-0 flex-col gap-6 ">
-      <div className="space-x-2 text-md uppercase text-muted-foreground">
+    <div
+      key={id}
+      className="relative flex w-72 shrink-0 flex-col gap-6 px-2 py-3"
+    >
+      <div className="list-border space-x-2 text-md uppercase text-muted-foreground hover:before:border-border">
         <span>{title}</span>
         <span>({tasksCount})</span>
       </div>
