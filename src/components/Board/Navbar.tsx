@@ -16,7 +16,9 @@ function Navbar({ board }: { board: BoardWithColumns }) {
           <LogoSmall />
         </Link>
         <div className="mr-auto flex items-center gap-1">
-          <h4 className="text-lg">{board.title}</h4>
+          <h1 className="max-w-[9rem] overflow-hidden text-ellipsis whitespace-nowrap text-lg md:max-w-[12rem] lg:max-w-xs">
+            {board.title}
+          </h1>
           <div className="inline-flex md:hidden">
             <SidebarDropDown />
           </div>
