@@ -55,7 +55,7 @@ function Column({ column: { id, title, tasks, order } }: ColumnProps) {
         <span>({tasksCount})</span>
       </div>
       <ScrollArea className="flex h-full flex-col">
-        <div className="space-y-5">
+        <div className="space-y-5 pb-1">
           {columnTasks.map((task) => (
             <Task key={task.id} task={task} tasks={tasks} />
           ))}
