@@ -1,4 +1,4 @@
-import { getBoardById } from "@/actions/get-board-by-id";
+import { getBoardById } from "@/actions/boards";
 import Navbar from "@/components/Board/Navbar";
 import { notFound } from "next/navigation";
 

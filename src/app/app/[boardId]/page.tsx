@@ -1,4 +1,4 @@
-import { getColumnsByBoardId } from "@/actions/get-columns-by-board-id";
+import { getColumnsByBoardId } from "@/actions/columns";
 import ColumnContainer from "@/components/Board/ColumnContainer";
 import { Button } from "@/components/ui/button";
 
