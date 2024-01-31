@@ -1,29 +1,65 @@
-import { Task } from "@/lib/types";
+import { Task as TTask } from "@/lib/types";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 interface TaskProps {
-  task: Task;
-  tasks: Task[];
+  task: TTask;
+  subtasks: TTask[];
 }
 
-function Task({ task, tasks }: TaskProps) {
-  const subtasks = tasks.filter((t) => t.parent_task_id === task.id);
+function Task({ task, subtasks }: TaskProps) {
+  const {
+    setNodeRef,
+    attributes,
+    listeners,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({
+    id: task.id,
+    data: {
+      type: "Task",
+      task,
+      subtasks,
+    },
+  });
+  const style = {
+    transition,
+    transform: CSS.Translate.toString(transform),
+  };
 
-  const subtasksCount = subtasks.length;
+  const subtasksCount = subtasks?.length;
 
-  const completedSubtasks = subtasks.filter(
+  const completedSubtasks = subtasks?.filter(
     ({ completed }) => completed === true,
   );
 
-  const completedSubtasksCount = completedSubtasks.length;
+  const completedSubtasksCount = completedSubtasks?.length;
+
+  if (isDragging) {
+    return (
+      <div
+        ref={setNodeRef}
+        style={style}
+        className="h-[4.25rem] rounded-lg border bg-muted opacity-50"
+      ></div>
+    );
+  }
 
   return (
-    <div className="group cursor-pointer space-y-2 rounded-lg bg-muted px-4 py-6 shadow-md">
+    <div
+      ref={setNodeRef}
+      {...listeners}
+      {...attributes}
+      style={style}
+      className="group space-y-2 rounded-lg bg-muted px-4 py-6"
+    >
       <h4 className="text-lg text-foreground group-hover:text-primary">
         {task.title}
       </h4>
       {!subtasksCount ? null : (
         <p className=" text-sm text-muted-foreground">
-          {completedSubtasksCount} of {subtasksCount}
+          {completedSubtasksCount} of {subtasksCount} subtasks
         </p>
       )}
     </div>
