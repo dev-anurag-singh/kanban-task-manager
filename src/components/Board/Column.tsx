@@ -3,14 +3,16 @@ import type { ColumnWithTasks } from "@/lib/types";
 import Task from "./Task";
 import { ScrollArea } from "../ui/scroll-area";
 import { cn } from "@/lib/utils";
-import { useSortable } from "@dnd-kit/sortable";
+import { SortableContext, useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
 interface ColumnProps {
   column: ColumnWithTasks;
 }
 
-function Column({ column: { id, title, tasks, order } }: ColumnProps) {
+function Column({ column: { id, title, tasks, columnTasks } }: ColumnProps) {
+  // Tasks which are direct child of a column and not subtasks
+
   const {
     setNodeRef,
     attributes,
@@ -30,9 +32,6 @@ function Column({ column: { id, title, tasks, order } }: ColumnProps) {
     transition,
     transform: CSS.Translate.toString(transform),
   };
-
-  // Tasks which are direct child of a column
-  const columnTasks = tasks.filter((task) => !task.parent_task_id);
 
   const tasksCount = columnTasks.length;
 
@@ -55,11 +54,17 @@ function Column({ column: { id, title, tasks, order } }: ColumnProps) {
         <span>({tasksCount})</span>
       </div>
       <ScrollArea className="flex h-full flex-col">
-        <div className="space-y-5 pb-1">
-          {columnTasks.map((task) => (
-            <Task key={task.id} task={task} tasks={tasks} />
-          ))}
-        </div>
+        <SortableContext items={columnTasks}>
+          <div className="flex flex-col gap-5 pb-2">
+            {columnTasks.map((task) => (
+              <Task
+                key={task.id}
+                task={task}
+                subtasks={tasks.filter((t) => t.parent_task_id === task.id)}
+              />
+            ))}
+          </div>
+        </SortableContext>
       </ScrollArea>
     </div>
   );
