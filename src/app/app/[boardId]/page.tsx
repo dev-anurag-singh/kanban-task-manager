@@ -23,10 +23,14 @@ async function BoardPage({
       </main>
     );
   }
+  const data = columns.map((col) => {
+    const columnTasks = col.tasks.filter((t) => !t.parent_task_id);
+    return { ...col, columnTasks };
+  });
 
   return (
-    <main className="flex gap-6 overflow-x-scroll p-4">
-      <ColumnContainer columns={columns} />
+    <main className="flex gap-6 overflow-x-auto p-4">
+      <ColumnContainer columns={data} />
       <div className="grid w-72 shrink-0 place-content-center rounded-md bg-column">
         <Button variant={"link"} className="text-2xl text-muted-foreground">
           + New Column
