@@ -84,36 +84,30 @@ export interface Database {
         Row: {
           board_id: string
           column_id: number
-          completed: boolean | null
           created_at: string
           description: string | null
           id: string
           order: number
-          parent_task_id: string | null
           title: string
           user_id: string
         }
         Insert: {
           board_id: string
           column_id: number
-          completed?: boolean | null
           created_at?: string
           description?: string | null
           id?: string
           order: number
-          parent_task_id?: string | null
           title: string
           user_id?: string
         }
         Update: {
           board_id?: string
           column_id?: number
-          completed?: boolean | null
           created_at?: string
           description?: string | null
           id?: string
           order?: number
-          parent_task_id?: string | null
           title?: string
           user_id?: string
         }
@@ -130,13 +124,6 @@ export interface Database {
             columns: ["column_id"]
             isOneToOne: false
             referencedRelation: "columns"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "tasks_parent_task_id_fkey"
-            columns: ["parent_task_id"]
-            isOneToOne: false
-            referencedRelation: "tasks"
             referencedColumns: ["id"]
           },
           {
