@@ -1,18 +1,20 @@
 "use client";
-import type { ColumnWithTasks } from "@/lib/types";
+import type { ColumnWithTasksAndSubtasks } from "@/lib/types";
 import Task from "./Task";
 import { ScrollArea } from "../ui/scroll-area";
 import { cn } from "@/lib/utils";
-import { SortableContext, useSortable } from "@dnd-kit/sortable";
+import {
+  SortableContext,
+  useSortable,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
 interface ColumnProps {
-  column: ColumnWithTasks;
+  column: ColumnWithTasksAndSubtasks;
 }
 
-function Column({ column: { id, title, tasks, columnTasks } }: ColumnProps) {
-  // Tasks which are direct child of a column and not subtasks
-
+function Column({ column: { id, title, tasks } }: ColumnProps) {
   const {
     setNodeRef,
     attributes,
@@ -25,7 +27,6 @@ function Column({ column: { id, title, tasks, columnTasks } }: ColumnProps) {
     data: {
       type: "Column",
       id,
-      title,
     },
   });
   const style = {
@@ -33,14 +34,14 @@ function Column({ column: { id, title, tasks, columnTasks } }: ColumnProps) {
     transform: CSS.Translate.toString(transform),
   };
 
-  const tasksCount = columnTasks.length;
+  const tasksCount = tasks.length;
 
   return (
     <div
       ref={setNodeRef}
       style={style}
       className={cn(
-        "relative flex max-h-full w-72 shrink-0 flex-col gap-6 bg-background px-2 py-3",
+        "relative flex h-full w-72 shrink-0 flex-col gap-6 bg-background px-2 py-3",
         isDragging &&
           "before:absolute before:inset-0 before:z-10 before:rounded-sm before:bg-muted",
       )}
@@ -48,20 +49,16 @@ function Column({ column: { id, title, tasks, columnTasks } }: ColumnProps) {
       <div
         {...listeners}
         {...attributes}
-        className="list-border cursor-grab space-x-2 text-md uppercase text-muted-foreground hover:before:border-border active:before:border-border aria-pressed:cursor-grabbing"
+        className="list-border space-x-2 text-md uppercase text-muted-foreground hover:cursor-grab hover:before:border-border active:before:border-border"
       >
         <span>{title}</span>
         <span>({tasksCount})</span>
       </div>
       <ScrollArea className="flex h-full flex-col">
-        <SortableContext items={columnTasks}>
+        <SortableContext items={tasks} strategy={verticalListSortingStrategy}>
           <div className="flex flex-col gap-5 pb-2">
-            {columnTasks.map((task) => (
-              <Task
-                key={task.id}
-                task={task}
-                subtasks={tasks.filter((t) => t.parent_task_id === task.id)}
-              />
+            {tasks.map((task) => (
+              <Task key={task.id} task={task} />
             ))}
           </div>
         </SortableContext>
