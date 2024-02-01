@@ -22,10 +22,6 @@ function Column({ column: { title, id }, tasks }: ColumnProps) {
       type: "Column",
     },
   });
-  const columnTasks = useMemo(
-    () => tasks.filter((task) => !task.parent_task_id),
-    [tasks],
-  );
 
   const tasksCount = tasks.length;
 
@@ -41,17 +37,10 @@ function Column({ column: { title, id }, tasks }: ColumnProps) {
         <span>({tasksCount})</span>
       </div>
       <ScrollArea className="flex h-full flex-col">
-        <SortableContext
-          items={columnTasks}
-          strategy={verticalListSortingStrategy}
-        >
+        <SortableContext items={tasks} strategy={verticalListSortingStrategy}>
           <div className="flex flex-col gap-5 pb-2">
-            {columnTasks.map((task) => (
-              <Task
-                key={task.id}
-                task={task}
-                subtasks={tasks.filter((t) => t.parent_task_id === task.id)}
-              />
+            {tasks.map((task) => (
+              <Task key={task.id} task={task} />
             ))}
           </div>
         </SortableContext>
