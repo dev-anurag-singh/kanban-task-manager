@@ -1,13 +1,13 @@
-import { Task as TTask } from "@/lib/types";
+import { TaskWithSubtasks } from "@/lib/types";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
 interface TaskProps {
-  task: TTask;
-  subtasks: TTask[];
+  task: TaskWithSubtasks;
 }
 
-function Task({ task, subtasks }: TaskProps) {
+function Task({ task }: TaskProps) {
+  const subtasks = task.subtasks;
   const {
     setNodeRef,
     attributes,
@@ -20,7 +20,6 @@ function Task({ task, subtasks }: TaskProps) {
     data: {
       type: "Task",
       task,
-      subtasks,
     },
   });
   const style = {
