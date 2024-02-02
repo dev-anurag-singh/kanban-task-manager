@@ -14,7 +14,8 @@ interface ColumnProps {
   column: ColumnWithTasksAndSubtasks;
 }
 
-function Column({ column: { id, title, tasks } }: ColumnProps) {
+function Column({ column }: ColumnProps) {
+  const { id, title, tasks } = column;
   const {
     setNodeRef,
     attributes,
@@ -26,7 +27,7 @@ function Column({ column: { id, title, tasks } }: ColumnProps) {
     id,
     data: {
       type: "Column",
-      id,
+      column,
     },
   });
   const style = {
