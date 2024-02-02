@@ -1,4 +1,5 @@
 import { TaskWithSubtasks } from "@/lib/types";
+import { cn } from "@/lib/utils";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
@@ -35,15 +36,15 @@ function Task({ task }: TaskProps) {
 
   const completedSubtasksCount = completedSubtasks?.length;
 
-  if (isDragging) {
-    return (
-      <div
-        ref={setNodeRef}
-        style={style}
-        className="h-[4.25rem] rounded-lg border bg-muted opacity-50"
-      ></div>
-    );
-  }
+  // if (isDragging) {
+  //   return (
+  //     <div
+  //       ref={setNodeRef}
+  //       style={style}
+  //       className="h-[4.25rem] rounded-lg border bg-muted opacity-50"
+  //     ></div>
+  //   );
+  // }
 
   return (
     <div
@@ -51,7 +52,10 @@ function Task({ task }: TaskProps) {
       {...listeners}
       {...attributes}
       style={style}
-      className="group space-y-2 rounded-lg bg-muted px-4 py-6"
+      className={cn(
+        "group space-y-2 rounded-lg bg-muted px-4 py-6",
+        isDragging && "opacity-25",
+      )}
     >
       <h4 className="text-lg text-foreground group-hover:text-primary">
         {task.title}
