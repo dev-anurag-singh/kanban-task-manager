@@ -42,7 +42,7 @@ export interface Database {
         Row: {
           board_id: string
           created_at: string
-          id: string
+          id: number
           order: number
           title: string
           user_id: string
@@ -50,15 +50,15 @@ export interface Database {
         Insert: {
           board_id: string
           created_at?: string
-          id?: string
+          id?: number
           order: number
           title: string
-          user_id?: string
+          user_id: string
         }
         Update: {
           board_id?: string
           created_at?: string
-          id?: string
+          id?: number
           order?: number
           title?: string
           user_id?: string
@@ -82,7 +82,8 @@ export interface Database {
       }
       tasks: {
         Row: {
-          column_id: string
+          board_id: string
+          column_id: number
           completed: boolean | null
           created_at: string
           description: string | null
@@ -93,7 +94,8 @@ export interface Database {
           user_id: string
         }
         Insert: {
-          column_id: string
+          board_id: string
+          column_id: number
           completed?: boolean | null
           created_at?: string
           description?: string | null
@@ -104,7 +106,8 @@ export interface Database {
           user_id?: string
         }
         Update: {
-          column_id?: string
+          board_id?: string
+          column_id?: number
           completed?: boolean | null
           created_at?: string
           description?: string | null
@@ -115,6 +118,13 @@ export interface Database {
           user_id?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "tasks_board_id_fkey"
+            columns: ["board_id"]
+            isOneToOne: false
+            referencedRelation: "boards"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "tasks_column_id_fkey"
             columns: ["column_id"]
