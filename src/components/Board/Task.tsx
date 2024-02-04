@@ -1,14 +1,14 @@
-import { TaskWithSubtasks } from "@/lib/types";
+import { Task, TaskWithSubtasks } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
 interface TaskProps {
-  task: TaskWithSubtasks;
+  task: Task;
+  subtasks: Task[];
 }
 
-function Task({ task }: TaskProps) {
-  const subtasks = task.subtasks;
+function Task({ task, subtasks }: TaskProps) {
   const {
     setNodeRef,
     attributes,
@@ -21,6 +21,7 @@ function Task({ task }: TaskProps) {
     data: {
       type: "Task",
       task,
+      subtasks,
     },
   });
   const style = {
@@ -35,16 +36,6 @@ function Task({ task }: TaskProps) {
   );
 
   const completedSubtasksCount = completedSubtasks?.length;
-
-  // if (isDragging) {
-  //   return (
-  //     <div
-  //       ref={setNodeRef}
-  //       style={style}
-  //       className="h-[4.25rem] rounded-lg border bg-muted opacity-50"
-  //     ></div>
-  //   );
-  // }
 
   return (
     <div
