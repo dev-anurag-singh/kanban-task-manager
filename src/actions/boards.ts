@@ -8,8 +8,10 @@ export const getBoardById = cache(async (id: string) => {
 
   const { data } = await supabase
     .from("boards")
-    .select(`*,columns(*)`)
+    .select(`*,columns(*),tasks(*)`)
     .eq("id", id)
+    .order("order", { foreignTable: "columns", ascending: true })
+    .order("order", { foreignTable: "tasks", ascending: true })
     .single();
 
   return data;
