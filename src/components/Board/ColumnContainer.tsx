@@ -1,6 +1,11 @@
 "use client";
 import Column from "./Column";
-import type { Columns, TaskAndSubtasks, Tasks } from "@/lib/types";
+import type {
+  Columns,
+  Task as TTask,
+  TaskAndSubtasks,
+  Tasks,
+} from "@/lib/types";
 import {
   DndContext,
   DragEndEvent,
@@ -9,6 +14,7 @@ import {
   DragStartEvent,
   PointerSensor,
   closestCenter,
+  closestCorners,
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
@@ -24,9 +30,6 @@ interface ColumnContainerProps {
 
 function ColumnContainer({ columns, tasks }: ColumnContainerProps) {
   const [mounted, setMounted] = useState(false);
-  // CUSTOM HOOK TO STRUCTURE TASKS
-  // const { orderedColumns, setOrderedColumns } = useOrderedColumns(columns);
-  // const [orderedColumns, setOrderedColumns] = useState(columns);
   const [tasksByColumn, setTasksByColumn] = useState(() => {
     let tasksByColumnId: { [key: number]: Tasks } = {};
 
@@ -38,7 +41,7 @@ function ColumnContainer({ columns, tasks }: ColumnContainerProps) {
     return tasksByColumnId;
   });
 
-  const [activeTask, setActiveTask] = useState<TaskAndSubtasks | null>(null);
+  const [activeTask, setActiveTask] = useState<TTask | null>(null);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -77,11 +80,7 @@ function ColumnContainer({ columns, tasks }: ColumnContainerProps) {
       </div>
 
       {createPortal(
-        <DragOverlay>
-          {activeTask && (
-            <Task task={activeTask.task} subtasks={activeTask.subtasks} />
-          )}
-        </DragOverlay>,
+        <DragOverlay>{activeTask && <Task task={activeTask} />}</DragOverlay>,
         document.body,
       )}
     </DndContext>
@@ -91,31 +90,11 @@ function ColumnContainer({ columns, tasks }: ColumnContainerProps) {
     console.log(tasksByColumn);
 
     setActiveTask(null);
-    // When Columns are Dragged
-    // const { active, over } = event;
-    // if (!over) return;
-
-    // if (active.id === over.id) return;
-
-    // if (active.data.current?.type === "Column") {
-    //   const reorderedColumns = arrayMove(
-    //     orderedColumns,
-    //     active.data.current?.sortable.index,
-    //     over.data.current?.sortable.index,
-    //   ).map((item, index) => ({ ...item, order: index }));
-
-    //   setOrderedColumns(reorderedColumns);
-
-    //   // updating data into the database
-    // }
   }
 
   function handleDragStart(event: DragStartEvent) {
     if (event.active.data.current?.type === "Task") {
-      setActiveTask({
-        task: event.active.data.current.task,
-        subtasks: event.active.data.current.subtasks,
-      });
+      setActiveTask(event.active.data.current.task);
     }
   }
 
@@ -139,13 +118,13 @@ function ColumnContainer({ columns, tasks }: ColumnContainerProps) {
       overColumnId = over.id as number;
     }
 
+    console.log(over);
+
     if (activeColumnId !== overColumnId) {
       setTasksByColumn((tasks) => {
         const activeColumnTasks = tasks[activeColumnId];
         const overColumnTasks = tasks[overColumnId];
-        const activeIndex = activeColumnTasks.findIndex(
-          (t) => t.id === active.id,
-        );
+
         let overIndex;
 
         if (isOverATask) {
@@ -154,38 +133,63 @@ function ColumnContainer({ columns, tasks }: ColumnContainerProps) {
           overIndex = overColumnTasks.length;
         }
 
-        const movedTasks = [
-          ...activeColumnTasks.filter(
-            (task) =>
-              task.id === active.id || task.parent_task_id === active.id,
-          ),
-        ];
+        const movedTask = activeColumnTasks.find(
+          (task) => task.id === active.id,
+        );
+        if (!movedTask) {
+          return { ...tasks };
+        }
 
-        const updatedMovedTasks = movedTasks.map((task) => {
-          const item = { ...task };
-          item.column_id = overColumnId;
+        const updatedMovedTask = { ...movedTask };
 
-          return item;
-        });
+        updatedMovedTask.column_id = overColumnId;
 
         let newOverClolumnTasks = [...overColumnTasks];
 
-        newOverClolumnTasks
-          .splice(overIndex, 0, ...updatedMovedTasks)
-          .filter((item) => !item.parent_task_id)
-          .map((item, i) => (item.order = i));
+        newOverClolumnTasks.splice(overIndex, 0, updatedMovedTask);
+
+        newOverClolumnTasks.forEach((item, i) => (item.order = i));
 
         return {
           ...tasks,
           [activeColumnId]: tasks[activeColumnId].filter(
-            (task) =>
-              task.id !== active.id && task.parent_task_id !== active.id,
+            (task) => task.id !== active.id,
           ),
           [overColumnId]: newOverClolumnTasks,
         };
       });
     }
     if (activeColumnId === overColumnId) {
+      setTasksByColumn((tasks) => {
+        const activeColumnTasks = tasks[activeColumnId];
+        const activeIndex = activeColumnTasks.findIndex(
+          (t) => t.id === active.id,
+        );
+        let overIndex;
+
+        if (isOverATask) {
+          overIndex = activeColumnTasks.findIndex((t) => t.id === over.id);
+        } else {
+          overIndex = activeColumnTasks.length;
+        }
+
+        let reOrderedTasks = arrayMove(
+          activeColumnTasks,
+          activeIndex,
+          overIndex,
+        );
+
+        const overColumnTasks = reOrderedTasks.map((task, i) => {
+          const item = { ...task };
+          item.order = i;
+          return item;
+        });
+
+        return {
+          ...tasks,
+          [activeColumnId]: overColumnTasks,
+        };
+      });
     }
   }
 }
