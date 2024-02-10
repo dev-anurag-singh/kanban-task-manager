@@ -1,20 +1,13 @@
 "use client";
 import Column from "./Column";
-import type {
-  Columns,
-  Task as TTask,
-  TaskAndSubtasks,
-  Tasks,
-} from "@/lib/types";
+import type { Columns, Task as TTask, Tasks } from "@/lib/types";
 import {
   DndContext,
-  DragEndEvent,
   DragOverEvent,
   DragOverlay,
   DragStartEvent,
   PointerSensor,
   closestCenter,
-  closestCorners,
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
