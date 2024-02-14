@@ -8,7 +8,6 @@ import {
   useSortable,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { useMemo, useState } from "react";
 
 interface ColumnProps {
   column: Column;
