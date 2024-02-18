@@ -15,6 +15,8 @@ import { SortableContext, arrayMove } from "@dnd-kit/sortable";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import Task from "./Task";
+import { Button } from "../ui/button";
+import BoardSkeleton from "./BoardSkeleton";
 
 interface ColumnContainerProps {
   columns: Columns;
@@ -44,39 +46,49 @@ function ColumnContainer({ columns, tasks }: ColumnContainerProps) {
     }),
   );
 
+  // TO AVOID HYDRATION ERROR
+  
   useEffect(() => {
     setMounted(true);
   }, []);
 
   if (!mounted) {
-    return null;
+    return <BoardSkeleton />;
   }
 
   return (
-    <DndContext
-      onDragOver={handleDragOver}
-      onDragStart={handleDragStart}
-      onDragEnd={handleDragEnd}
-      sensors={sensors}
-      collisionDetection={closestCenter}
-    >
-      <div className=" flex gap-6">
-        <SortableContext items={columns}>
-          {columns.map((column) => (
-            <Column
-              key={column.id}
-              column={column}
-              tasks={tasksByColumn[column.id]}
-            />
-          ))}
-        </SortableContext>
-      </div>
+    <main className="flex gap-6 overflow-x-auto p-4">
+      <DndContext
+        onDragOver={handleDragOver}
+        onDragStart={handleDragStart}
+        onDragEnd={handleDragEnd}
+        sensors={sensors}
+        collisionDetection={closestCenter}
+      >
+        <div className=" flex gap-6">
+          <SortableContext items={columns}>
+            {columns.map((column) => (
+              <Column
+                key={column.id}
+                column={column}
+                tasks={tasksByColumn[column.id]}
+              />
+            ))}
+          </SortableContext>
+        </div>
 
-      {createPortal(
-        <DragOverlay>{activeTask && <Task task={activeTask} />}</DragOverlay>,
-        document.body,
-      )}
-    </DndContext>
+        {createPortal(
+          <DragOverlay>{activeTask && <Task task={activeTask} />}</DragOverlay>,
+          document.body,
+        )}
+      </DndContext>
+
+      <div className="grid w-72 shrink-0 place-content-center rounded-md bg-column">
+        <Button variant={"link"} className="text-2xl text-muted-foreground">
+          + New Column
+        </Button>
+      </div>
+    </main>
   );
 
   function handleDragEnd() {
