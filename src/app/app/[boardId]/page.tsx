@@ -1,5 +1,4 @@
 import { getBoardById } from "@/actions/boards";
-import { getColumnsByBoardId } from "@/actions/columns";
 import ColumnContainer from "@/components/Board/ColumnContainer";
 import { Button } from "@/components/ui/button";
 import { notFound } from "next/navigation";
@@ -12,6 +11,7 @@ async function BoardPage({
   };
 }) {
   const board = await getBoardById(params.boardId);
+
   if (!board) {
     notFound();
   }
@@ -29,16 +29,7 @@ async function BoardPage({
     );
   }
 
-  return (
-    <main className="flex gap-6 overflow-x-auto p-4">
-      <ColumnContainer columns={board.columns} tasks={board.tasks} />
-      <div className="grid w-72 shrink-0 place-content-center rounded-md bg-column">
-        <Button variant={"link"} className="text-2xl text-muted-foreground">
-          + New Column
-        </Button>
-      </div>
-    </main>
-  );
+  return <ColumnContainer columns={board.columns} tasks={board.tasks} />;
 }
 
 export default BoardPage;
