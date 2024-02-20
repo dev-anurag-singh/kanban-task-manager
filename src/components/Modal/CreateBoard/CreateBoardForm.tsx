@@ -1,28 +1,34 @@
 "use client";
 import { useForm, useFieldArray } from "react-hook-form";
+import {
+  BoardValidator,
+  TBoardValidator,
+} from "@/lib/validators/board-validator";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
-
-type FormValues = {
-  board: string;
-  columns: {
-    column: string;
-  }[];
-};
+import { zodResolver } from "@hookform/resolvers/zod";
 
 function CreateBoardForm() {
-  const { control, register, handleSubmit } = useForm<FormValues>();
+  const {
+    control,
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<TBoardValidator>({
+    resolver: zodResolver(BoardValidator),
+  });
 
   const { fields, append, remove } = useFieldArray({
     control,
     name: "columns",
   });
 
-  const onSubmit = (data: FormValues) => {
+  const onSubmit = (data: TBoardValidator) => {
     console.log(data);
   };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-col gap-6">
@@ -30,6 +36,7 @@ function CreateBoardForm() {
           <Label htmlFor="board-name">Board Name</Label>
           <Input
             {...register("board")}
+            error={errors.board?.message}
             id="board-name"
             placeholder="e.g. web design"
           />
@@ -45,6 +52,9 @@ function CreateBoardForm() {
                 >
                   <Input
                     {...register(`columns.${index}.column`)}
+                    error={
+                      errors.columns && errors.columns[index]?.column?.message
+                    }
                     className="basis-full"
                   />
                   <Button
