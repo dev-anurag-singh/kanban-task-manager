@@ -47,7 +47,7 @@ function ColumnContainer({ columns, tasks }: ColumnContainerProps) {
   );
 
   // TO AVOID HYDRATION ERROR
-  
+
   useEffect(() => {
     setMounted(true);
   }, []);
