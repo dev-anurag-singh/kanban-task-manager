@@ -11,7 +11,12 @@ import { X } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useCreateBoard } from "./useCreateBoard";
 
-function BoardForm() {
+interface BoardFormProps {
+  closeModal: () => void;
+  edit?: boolean;
+}
+
+function BoardForm({ closeModal, edit = false }: BoardFormProps) {
   const {
     control,
     register,
@@ -29,7 +34,9 @@ function BoardForm() {
   const { addBoard, isPending } = useCreateBoard();
 
   const onSubmit = (data: TBoardValidator) => {
-    addBoard(data);
+    addBoard(data, {
+      onSettled: closeModal,
+    });
   };
 
   return (
@@ -42,6 +49,7 @@ function BoardForm() {
             error={errors.title?.message}
             id="board-name"
             placeholder="e.g. web design"
+            disabled={isPending}
           />
         </div>
         <div className="space-y-2">
@@ -58,12 +66,14 @@ function BoardForm() {
                     error={
                       errors.columns && errors.columns[index]?.column?.message
                     }
+                    disabled={isPending}
                     className="basis-full"
                   />
                   <Button
                     onClick={() => remove(index)}
                     type="button"
                     variant={"ghost"}
+                    disabled={isPending}
                     size={"icon"}
                   >
                     <X />
@@ -72,6 +82,7 @@ function BoardForm() {
               );
             })}
             <Button
+              disabled={isPending}
               onClick={() => append({ column: "" })}
               type="button"
               variant="secondary"
@@ -80,7 +91,9 @@ function BoardForm() {
             </Button>
           </div>
         </div>
-        <Button>Create New Board</Button>
+        <Button disabled={isPending}>
+          {edit ? "Save changes" : "Create New Board"}
+        </Button>
       </div>
     </form>
   );
