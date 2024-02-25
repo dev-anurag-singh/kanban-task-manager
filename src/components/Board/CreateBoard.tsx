@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -8,11 +10,18 @@ import {
 } from "@/components/ui/dialog";
 import BoardIcon from "@/icons/BoardIcon.svg";
 import BoardForm from "./BoardForm";
+import { useRef } from "react";
 
 function CreateBoard() {
+  const closeRef = useRef<HTMLButtonElement | null>(null);
+
+  function closeModal() {
+    closeRef.current?.click();
+  }
+
   return (
     <Dialog>
-      <DialogTrigger asChild>
+      <DialogTrigger ref={closeRef} asChild>
         <Button variant="link" className="p-0">
           <span className="mr-3">
             <BoardIcon />
@@ -24,7 +33,7 @@ function CreateBoard() {
         <DialogHeader>
           <DialogTitle>Add New Board</DialogTitle>
         </DialogHeader>
-        <BoardForm />
+        <BoardForm closeModal={closeModal} />
       </DialogContent>
     </Dialog>
   );
