@@ -1,10 +1,10 @@
-import EllipsisVertical from "@/icons/EllipsisVertical.svg";
 import IconPlus from "@/icons/IconPlus.svg";
 import { Button } from "../ui/button";
 import { LogoSmall } from "../Logo";
 import Link from "next/link";
 import { BoardWithColumns } from "@/lib/types";
 import SidebarDropDown from "../Sidebar/SidebarDropDown";
+import BoardTooltip from "./BoardPopover";
 
 function Navbar({ board }: { board: BoardWithColumns }) {
   const disabled = board.columns.length === 0;
@@ -33,9 +33,7 @@ function Navbar({ board }: { board: BoardWithColumns }) {
             <IconPlus />
           </Button>
         </div>
-        <Button size="icon" variant="ghost" className="ml-1">
-          <EllipsisVertical />
-        </Button>
+        <BoardTooltip />
       </div>
     </div>
   );
