@@ -12,10 +12,10 @@ import {
 
 interface ColumnProps {
   column: Column;
-  tasks: Tasks;
+  // tasks: Tasks;
 }
 
-function Column({ column: { title, id }, tasks }: ColumnProps) {
+function Column({ column: { title, id } }: ColumnProps) {
   const { setNodeRef } = useSortable({
     id: id,
     data: {
@@ -23,7 +23,7 @@ function Column({ column: { title, id }, tasks }: ColumnProps) {
     },
   });
 
-  const tasksCount = tasks.length;
+  // const tasksCount = tasks.length;
   const columnColor = stc(id || "");
 
   return (
@@ -39,9 +39,9 @@ function Column({ column: { title, id }, tasks }: ColumnProps) {
           className="h-4 w-4 rounded-full"
         />
         <span>{title}</span>
-        <span>({tasksCount})</span>
+        {/* <span>({tasksCount})</span> */}
       </div>
-      <ScrollArea className="flex h-full flex-col">
+      {/* <ScrollArea className="flex h-full flex-col">
         <SortableContext items={tasks} strategy={verticalListSortingStrategy}>
           <div className="flex flex-col gap-5 pb-2">
             {tasks.map((task) => (
@@ -49,7 +49,7 @@ function Column({ column: { title, id }, tasks }: ColumnProps) {
             ))}
           </div>
         </SortableContext>
-      </ScrollArea>
+      </ScrollArea> */}
     </div>
   );
 }

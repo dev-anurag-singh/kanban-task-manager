@@ -71,7 +71,7 @@ function ColumnContainer({ columns, tasks }: ColumnContainerProps) {
               <Column
                 key={column.id}
                 column={column}
-                tasks={tasksByColumn[column.id]}
+                // tasks={tasksByColumn[column.id]}
               />
             ))}
           </SortableContext>
