@@ -7,6 +7,7 @@ export const BoardValidator = z.object({
       column: z.string().min(4, {
         message: "Minimun 4 characters",
       }),
+      columnId: z.number().optional(),
     })
     .array(),
 });
