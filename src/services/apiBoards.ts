@@ -64,10 +64,12 @@ export async function updateBoard({
   title,
   board_id,
   columns,
+  removedColumns,
 }: {
   title: string;
   board_id: string;
-  columns: { column: string; id?: string }[];
+  columns: { column: string; columnId?: number }[];
+  removedColumns: number[];
 }) {
   const { data, error } = await supabaseBrowserClient
     .from("boards")
@@ -77,6 +79,24 @@ export async function updateBoard({
     .single();
 
   if (error) throw new Error(error.message);
+
+  // Delete the removed columns
+
+  console.log(removedColumns);
+
+  if (removedColumns.length) {
+    removedColumns.forEach((id) => {
+      async function deleteColumn() {
+        const { error: err } = await supabaseBrowserClient
+          .from("columns")
+          .delete()
+          .eq("id", id);
+
+        if (err) throw new Error("Something went wrong");
+      }
+      deleteColumn();
+    });
+  }
 
   if (!columns.length) {
     return data;
@@ -89,22 +109,30 @@ export async function updateBoard({
       title: string;
       order: number;
       board_id: string;
-      id?: string;
+      id?: number;
     }[]
   >[];
 
   columns.forEach((col, i) => {
-    newColumnsData.push({
-      title: col.column,
-      order: i,
-      board_id: data.id,
-      id: col.id,
-    });
+    if (col.columnId) {
+      newColumnsData.push({
+        title: col.column,
+        order: i,
+        board_id: data.id,
+        id: col.columnId,
+      });
+    } else {
+      newColumnsData.push({
+        title: col.column,
+        order: i,
+        board_id: data.id,
+      });
+    }
   });
 
   const { data: columnsData, error: columnsError } = await supabaseBrowserClient
     .from("columns")
-    .upsert(newColumnsData)
+    .upsert(newColumnsData, { defaultToNull: false })
     .select();
 
   if (columnsError) {
