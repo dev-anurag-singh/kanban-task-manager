@@ -4,7 +4,7 @@ import { LogoSmall } from "../Logo";
 import Link from "next/link";
 import { BoardWithColumns } from "@/lib/types";
 import SidebarDropDown from "../Sidebar/SidebarDropDown";
-import BoardTooltip from "./BoardPopover";
+import BoardPopover from "./BoardPopover";
 
 function Navbar({ board }: { board: BoardWithColumns }) {
   const disabled = board.columns.length === 0;
@@ -33,7 +33,7 @@ function Navbar({ board }: { board: BoardWithColumns }) {
             <IconPlus />
           </Button>
         </div>
-        <BoardTooltip />
+        <BoardPopover board={board} />
       </div>
     </div>
   );
