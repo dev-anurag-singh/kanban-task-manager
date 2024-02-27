@@ -7,7 +7,7 @@ import { Board } from "@/lib/types";
 import { useQuery } from "@tanstack/react-query";
 import { fetchBoards } from "@/services/apiBoards";
 import { Skeleton } from "../ui/skeleton";
-import CreateBoard from "@/components/Board/CreateBoard";
+import CreateBoard from "@/components/Modals/Board/CreateBoard";
 
 function NavItems() {
   const { data: boards, isLoading } = useQuery<Board[]>({
