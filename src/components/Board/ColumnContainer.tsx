@@ -1,6 +1,11 @@
 "use client";
 import Column from "./Column";
-import type { Columns, Task as TTask, Tasks } from "@/lib/types";
+import type {
+  BoardWithColumns,
+  Columns,
+  Task as TTask,
+  Tasks,
+} from "@/lib/types";
 import {
   DndContext,
   DragOverEvent,
@@ -17,13 +22,15 @@ import { createPortal } from "react-dom";
 import Task from "./Task";
 import { Button } from "../ui/button";
 import BoardSkeleton from "./BoardSkeleton";
+import EditBoard from "../Modals/Board/EditBoard";
 
 interface ColumnContainerProps {
   columns: Columns;
   tasks: Tasks;
+  board: BoardWithColumns;
 }
 
-function ColumnContainer({ columns, tasks }: ColumnContainerProps) {
+function ColumnContainer({ board, columns, tasks }: ColumnContainerProps) {
   const [mounted, setMounted] = useState(false);
   const [tasksByColumn, setTasksByColumn] = useState(() => {
     let tasksByColumnId: { [key: number]: Tasks } = {};
@@ -84,9 +91,11 @@ function ColumnContainer({ columns, tasks }: ColumnContainerProps) {
       </DndContext>
 
       <div className="grid w-72 shrink-0 place-content-center rounded-md bg-column">
-        <Button variant={"link"} className="text-2xl text-muted-foreground">
-          + New Column
-        </Button>
+        <EditBoard data={board}>
+          <Button variant={"link"} className="text-2xl text-muted-foreground">
+            + New Column
+          </Button>
+        </EditBoard>
       </div>
     </main>
   );
