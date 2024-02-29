@@ -6,6 +6,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import EditBoard from "@/components/Modals/Board/EditBoard";
 import { useState } from "react";
 import { BoardWithColumns } from "@/lib/types";
+import DeleteBoard from "../Modals/Board/DeleteBoard";
 
 function BoardPopover({ board }: { board: BoardWithColumns }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -27,9 +28,7 @@ function BoardPopover({ board }: { board: BoardWithColumns }) {
         className="w-48 dark:bg-background"
       >
         <EditBoard data={board} closePopover={closePopover} />
-        <Button variant="link" className="text-destructive">
-          Delete Board
-        </Button>
+        <DeleteBoard data={board} closePopover={closePopover} />
       </PopoverContent>
     </Popover>
   );

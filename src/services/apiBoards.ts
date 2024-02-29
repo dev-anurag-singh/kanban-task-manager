@@ -141,3 +141,12 @@ export async function updateBoard({
 
   return data;
 }
+
+export async function deleteBoard(id: string) {
+  const { error } = await supabaseBrowserClient
+    .from("boards")
+    .delete()
+    .eq("id", id);
+
+  if (error) throw new Error(error.message);
+}
