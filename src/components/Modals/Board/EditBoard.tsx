@@ -15,9 +15,10 @@ import { BoardWithColumns } from "@/lib/types";
 interface EditBoardProps {
   closePopover?: () => void;
   data: BoardWithColumns;
+  children?: React.ReactNode;
 }
 
-function EditBoard({ closePopover, data }: EditBoardProps) {
+function EditBoard({ closePopover, data, children }: EditBoardProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   function closeModal() {
@@ -30,9 +31,13 @@ function EditBoard({ closePopover, data }: EditBoardProps) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="link" className="text-muted-foreground">
-          Edit Board
-        </Button>
+        {children ? (
+          children
+        ) : (
+          <Button variant="link" className="text-muted-foreground">
+            Edit Board
+          </Button>
+        )}
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
