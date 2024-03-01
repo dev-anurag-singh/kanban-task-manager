@@ -9,3 +9,5 @@ export type Tasks = Task[];
 export type TaskAndSubtasks = { task: Task; subtasks: Task[] };
 
 export type BoardWithColumns = Board & { columns: Column[] };
+
+export type TaskWithSubtasks = Task & {subtasks:Task[]}
