@@ -3,11 +3,12 @@ import Column from "./Column";
 import type {
   BoardWithColumns,
   Columns,
-  Task as TTask,
+  TaskAndSubtasks,
   Tasks,
 } from "@/lib/types";
 import {
   DndContext,
+  DragEndEvent,
   DragOverEvent,
   DragOverlay,
   DragStartEvent,
@@ -23,6 +24,8 @@ import Task from "./Task";
 import { Button } from "../ui/button";
 import BoardSkeleton from "./BoardSkeleton";
 import EditBoard from "../Modals/Board/EditBoard";
+import _ from "lodash";
+import { useReorderTasks } from "./useReorderTasks";
 
 interface ColumnContainerProps {
   columns: Columns;
@@ -30,20 +33,35 @@ interface ColumnContainerProps {
   board: BoardWithColumns;
 }
 
-function ColumnContainer({ board, columns, tasks }: ColumnContainerProps) {
-  const [mounted, setMounted] = useState(false);
-  const [tasksByColumn, setTasksByColumn] = useState(() => {
-    let tasksByColumnId: { [key: number]: Tasks } = {};
+function tasksByColumnId({
+  columns,
+  tasks,
+}: {
+  columns: Columns;
+  tasks: Tasks;
+}) {
+  let tasksByColumnId: { [key: number]: Tasks } = {};
 
-    columns.forEach((column) => {
-      const { id } = column;
-      tasksByColumnId[id] = [...tasks.filter((task) => task.column_id === id)];
-    });
-
-    return tasksByColumnId;
+  columns.forEach((column) => {
+    const { id } = column;
+    tasksByColumnId[id] = [...tasks.filter((task) => task.column_id === id)];
   });
 
-  const [activeTask, setActiveTask] = useState<TTask | null>(null);
+  return tasksByColumnId;
+}
+
+function ColumnContainer({ board, columns, tasks }: ColumnContainerProps) {
+  const [mounted, setMounted] = useState(false);
+  const [tasksByColumn, setTasksByColumn] = useState(() =>
+    tasksByColumnId({ columns, tasks }),
+  );
+  const [orderedColumns, setOrderedColumns] = useState(columns);
+
+  const [activeTask, setActiveTask] = useState<TaskAndSubtasks | null>(null);
+
+  const [updatedList, setUpdatedList] = useState<Tasks | null>(null);
+
+  const { reorder } = useReorderTasks();
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -52,6 +70,11 @@ function ColumnContainer({ board, columns, tasks }: ColumnContainerProps) {
       },
     }),
   );
+
+  useEffect(() => {
+    setTasksByColumn(() => tasksByColumnId({ columns, tasks }));
+    setOrderedColumns(columns);
+  }, [columns, tasks]);
 
   // TO AVOID HYDRATION ERROR
 
@@ -73,19 +96,23 @@ function ColumnContainer({ board, columns, tasks }: ColumnContainerProps) {
         collisionDetection={closestCenter}
       >
         <div className=" flex gap-6">
-          <SortableContext items={columns}>
-            {columns.map((column) => (
+          <SortableContext items={orderedColumns}>
+            {orderedColumns.map((column) => (
               <Column
                 key={column.id}
                 column={column}
-                // tasks={tasksByColumn[column.id]}
+                tasks={tasksByColumn[column.id]}
               />
             ))}
           </SortableContext>
         </div>
 
         {createPortal(
-          <DragOverlay>{activeTask && <Task task={activeTask} />}</DragOverlay>,
+          <DragOverlay>
+            {activeTask && (
+              <Task task={activeTask.task} subtasks={activeTask.subtasks} />
+            )}
+          </DragOverlay>,
           document.body,
         )}
       </DndContext>
@@ -100,15 +127,25 @@ function ColumnContainer({ board, columns, tasks }: ColumnContainerProps) {
     </main>
   );
 
-  function handleDragEnd() {
-    console.log(tasksByColumn);
-
+  function handleDragEnd(event: DragEndEvent) {
     setActiveTask(null);
+    const { active, over } = event;
+
+    if (!over) return;
+
+    if (updatedList) {
+      reorder(updatedList, {
+        onSettled: () => setUpdatedList(null),
+      });
+    }
   }
 
   function handleDragStart(event: DragStartEvent) {
     if (event.active.data.current?.type === "Task") {
-      setActiveTask(event.active.data.current.task);
+      setActiveTask({
+        task: event.active.data.current.task,
+        subtasks: event.active.data.current.subtasks,
+      });
     }
   }
 
@@ -132,12 +169,10 @@ function ColumnContainer({ board, columns, tasks }: ColumnContainerProps) {
       overColumnId = over.id as number;
     }
 
-    console.log(over);
-
     if (activeColumnId !== overColumnId) {
       setTasksByColumn((tasks) => {
-        const activeColumnTasks = tasks[activeColumnId];
-        const overColumnTasks = tasks[overColumnId];
+        const activeColumnTasks = _.cloneDeep(tasks[activeColumnId]);
+        const overColumnTasks = _.cloneDeep(tasks[overColumnId]);
 
         let overIndex;
 
@@ -147,27 +182,26 @@ function ColumnContainer({ board, columns, tasks }: ColumnContainerProps) {
           overIndex = overColumnTasks.length;
         }
 
-        const movedTask = activeColumnTasks.find(
-          (task) => task.id === active.id,
+        const movedTasks = activeColumnTasks.filter(
+          (task) => task.id === active.id || task.parent_id === active.id,
         );
-        if (!movedTask) {
-          return { ...tasks };
-        }
 
-        const updatedMovedTask = { ...movedTask };
-
-        updatedMovedTask.column_id = overColumnId;
+        movedTasks.forEach((task) => (task.column_id = overColumnId));
 
         let newOverClolumnTasks = [...overColumnTasks];
 
-        newOverClolumnTasks.splice(overIndex, 0, updatedMovedTask);
+        newOverClolumnTasks.splice(overIndex, 0, ...movedTasks);
 
-        newOverClolumnTasks.forEach((item, i) => (item.order = i));
+        let overTasks = newOverClolumnTasks.filter((t) => !t.parent_id);
+
+        overTasks.forEach((item, i) => (item.order = i));
+
+        setUpdatedList(newOverClolumnTasks);
 
         return {
           ...tasks,
           [activeColumnId]: tasks[activeColumnId].filter(
-            (task) => task.id !== active.id,
+            (task) => task.id !== active.id && task.parent_id !== active.id,
           ),
           [overColumnId]: newOverClolumnTasks,
         };
@@ -175,7 +209,7 @@ function ColumnContainer({ board, columns, tasks }: ColumnContainerProps) {
     }
     if (activeColumnId === overColumnId) {
       setTasksByColumn((tasks) => {
-        const activeColumnTasks = tasks[activeColumnId];
+        const activeColumnTasks = _.cloneDeep(tasks[activeColumnId]);
         const activeIndex = activeColumnTasks.findIndex(
           (t) => t.id === active.id,
         );
@@ -193,15 +227,13 @@ function ColumnContainer({ board, columns, tasks }: ColumnContainerProps) {
           overIndex,
         );
 
-        const overColumnTasks = reOrderedTasks.map((task, i) => {
-          const item = { ...task };
-          item.order = i;
-          return item;
-        });
+        reOrderedTasks.forEach((task, i) => (task.order = i));
+
+        setUpdatedList(reOrderedTasks);
 
         return {
           ...tasks,
-          [activeColumnId]: overColumnTasks,
+          [activeColumnId]: reOrderedTasks,
         };
       });
     }

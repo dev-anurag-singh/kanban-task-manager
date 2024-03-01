@@ -9,13 +9,18 @@ import {
   useSortable,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
+import { useMemo } from "react";
 
 interface ColumnProps {
   column: Column;
-  // tasks: Tasks;
+  tasks: Tasks;
 }
 
-function Column({ column: { title, id } }: ColumnProps) {
+function Column({ column: { title, id }, tasks }: ColumnProps) {
+  const childTasks = useMemo(() => {
+    return tasks.filter((t) => !t.parent_id);
+  }, [tasks]);
+
   const { setNodeRef } = useSortable({
     id: id,
     data: {
@@ -23,7 +28,7 @@ function Column({ column: { title, id } }: ColumnProps) {
     },
   });
 
-  // const tasksCount = tasks.length;
+  const tasksCount = childTasks.length;
   const columnColor = stc(id || "");
 
   return (
@@ -39,17 +44,24 @@ function Column({ column: { title, id } }: ColumnProps) {
           className="h-4 w-4 rounded-full"
         />
         <span>{title}</span>
-        {/* <span>({tasksCount})</span> */}
+        <span>({tasksCount})</span>
       </div>
-      {/* <ScrollArea className="flex h-full flex-col">
-        <SortableContext items={tasks} strategy={verticalListSortingStrategy}>
+      <ScrollArea className="flex h-full flex-col">
+        <SortableContext
+          items={childTasks}
+          strategy={verticalListSortingStrategy}
+        >
           <div className="flex flex-col gap-5 pb-2">
-            {tasks.map((task) => (
-              <Task key={task.id} task={task} />
+            {childTasks.map((task) => (
+              <Task
+                key={task.id}
+                task={task}
+                subtasks={tasks.filter((t) => t.parent_id === task.id)}
+              />
             ))}
           </div>
         </SortableContext>
-      </ScrollArea> */}
+      </ScrollArea>
     </div>
   );
 }

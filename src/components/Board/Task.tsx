@@ -5,9 +5,10 @@ import { CSS } from "@dnd-kit/utilities";
 
 interface TaskProps {
   task: Task;
+  subtasks?: Task[];
 }
 
-function Task({ task }: TaskProps) {
+function Task({ task, subtasks = [] }: TaskProps) {
   const {
     setNodeRef,
     attributes,
@@ -20,12 +21,21 @@ function Task({ task }: TaskProps) {
     data: {
       type: "Task",
       task,
+      subtasks,
     },
   });
   const style = {
     transition,
     transform: CSS.Translate.toString(transform),
   };
+
+  const subtasksCount = subtasks.length;
+
+  const completedSubtasks = subtasks.filter(
+    ({ completed }) => completed === true,
+  );
+
+  const completedSubtasksCount = completedSubtasks.length;
 
   return (
     <div
@@ -41,6 +51,11 @@ function Task({ task }: TaskProps) {
       <h4 className="text-lg text-foreground group-hover:text-primary">
         {task.title}
       </h4>
+      {!subtasksCount ? null : (
+        <p className=" text-sm text-muted-foreground">
+          {completedSubtasksCount} of {subtasksCount} subtasks
+        </p>
+      )}
     </div>
   );
 }
