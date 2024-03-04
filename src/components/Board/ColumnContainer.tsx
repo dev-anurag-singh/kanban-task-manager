@@ -17,7 +17,11 @@ import {
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
-import { SortableContext, arrayMove } from "@dnd-kit/sortable";
+import {
+  SortableContext,
+  arrayMove,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import Task from "./Task";
@@ -96,7 +100,10 @@ function ColumnContainer({ board, columns, tasks }: ColumnContainerProps) {
         collisionDetection={closestCenter}
       >
         <div className=" flex gap-6">
-          <SortableContext items={orderedColumns}>
+          <SortableContext
+            strategy={verticalListSortingStrategy}
+            items={orderedColumns}
+          >
             {orderedColumns.map((column) => (
               <Column
                 key={column.id}
