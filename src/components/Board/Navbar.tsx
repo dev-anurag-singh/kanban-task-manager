@@ -5,6 +5,7 @@ import Link from "next/link";
 import { BoardWithColumns } from "@/lib/types";
 import SidebarDropDown from "../Sidebar/SidebarDropDown";
 import BoardPopover from "./BoardPopover";
+import AddTask from "../Modals/Task/AddTask";
 
 function Navbar({ board }: { board: BoardWithColumns }) {
   const disabled = board.columns.length === 0;
@@ -23,16 +24,7 @@ function Navbar({ board }: { board: BoardWithColumns }) {
             <SidebarDropDown />
           </div>
         </div>
-        <div className="hidden md:block">
-          <Button disabled={disabled} size="lg">
-            + Add New Task
-          </Button>
-        </div>
-        <div className="rounded-3xl shadow-lg md:hidden">
-          <Button disabled={disabled} size="icon">
-            <IconPlus />
-          </Button>
-        </div>
+        <AddTask triggerDisabled={disabled} />
         <BoardPopover board={board} />
       </div>
     </div>
