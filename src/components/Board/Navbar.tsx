@@ -1,5 +1,3 @@
-import IconPlus from "@/icons/IconPlus.svg";
-import { Button } from "../ui/button";
 import { LogoSmall } from "../Logo";
 import Link from "next/link";
 import { BoardWithColumns } from "@/lib/types";
