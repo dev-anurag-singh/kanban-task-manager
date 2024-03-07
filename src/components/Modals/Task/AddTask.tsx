@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -8,10 +9,24 @@ import {
 } from "@/components/ui/dialog";
 import IconPlus from "@/icons/IconPlus.svg";
 import TaskForm from "./TaskForm";
+import { BoardWithColumns } from "@/lib/types";
+import { useState } from "react";
 
-function AddTask({ triggerDisabled }: { triggerDisabled: boolean }) {
+function AddTask({
+  triggerDisabled,
+  board,
+}: {
+  triggerDisabled: boolean;
+  board: BoardWithColumns;
+}) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <div className="hidden md:block">
         <DialogTrigger asChild>
           <Button disabled={triggerDisabled} size="lg">
@@ -30,7 +45,7 @@ function AddTask({ triggerDisabled }: { triggerDisabled: boolean }) {
         <DialogHeader>
           <DialogTitle>Add New Task</DialogTitle>
         </DialogHeader>
-        <TaskForm />
+        <TaskForm board={board} closeModal={closeModal} />
       </DialogContent>
     </Dialog>
   );
