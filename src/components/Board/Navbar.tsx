@@ -22,7 +22,7 @@ function Navbar({ board }: { board: BoardWithColumns }) {
             <SidebarDropDown />
           </div>
         </div>
-        <AddTask triggerDisabled={disabled} />
+        <AddTask board={board} triggerDisabled={disabled} />
         <BoardPopover board={board} />
       </div>
     </div>
