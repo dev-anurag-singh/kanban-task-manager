@@ -5,6 +5,7 @@ export const TaskValidator = z.object({
   subtasks: z
     .object({
       title: z.string().min(1, { message: "Can't be empty" }),
+      completed: z.boolean().optional(),
     })
     .array(),
   description: z.string(),
