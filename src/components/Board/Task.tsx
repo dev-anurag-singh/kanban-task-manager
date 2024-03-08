@@ -2,6 +2,7 @@ import { Task } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import ViewTask from "@/components/Modals/Task/ViewTask";
 
 interface TaskProps {
   task: Task;
@@ -38,7 +39,8 @@ function Task({ task, subtasks = [] }: TaskProps) {
   const completedSubtasksCount = completedSubtasks.length;
 
   return (
-    <div
+    <ViewTask task={task} subtasks={subtasks}>
+      <div
       ref={setNodeRef}
       {...listeners}
       {...attributes}
@@ -57,6 +59,7 @@ function Task({ task, subtasks = [] }: TaskProps) {
         </p>
       )}
     </div>
+    </ViewTask>
   );
 }
 
