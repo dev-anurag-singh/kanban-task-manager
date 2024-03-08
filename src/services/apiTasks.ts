@@ -62,3 +62,18 @@ export async function createTask({
 
   return data;
 }
+
+export async function updateTaskStatus({
+  id,
+  status,
+}: {
+  id: string;
+  status: boolean;
+}) {
+  const { data, error } = await supabaseBrowserClient
+    .from("tasks")
+    .update({ completed: status })
+    .eq("id", id);
+
+  if (error) throw new Error(error.message);
+}
