@@ -37,7 +37,7 @@ export async function createTask({
     .insert({
       title,
       description,
-      order: 0,
+      order: count,
       column_id,
       board_id,
     })
@@ -62,6 +62,59 @@ export async function createTask({
 
   return data;
 }
+export async function updateTask({
+  title,
+  subtasks,
+  description,
+  column_id,
+  board_id,
+  id,
+}: {
+  title: string;
+  subtasks: { title: string; completed?: boolean }[];
+  description: string;
+  column_id: number;
+  board_id: string;
+  order: number;
+  id: string;
+}) {
+  const { data, error } = await supabaseBrowserClient
+    .from("tasks")
+    .update({
+      title,
+      description,
+      column_id,
+    })
+    .eq("id", id)
+    .select()
+    .single();
+
+  if (error) throw new Error(error.message);
+
+  const { error: deleteError } = await supabaseBrowserClient
+    .from("tasks")
+    .delete()
+    .eq("parent_id", id);
+
+  if (deleteError) throw new Error("Something went wrong!");
+
+  if (subtasks.length) {
+    const postData = subtasks.map((subtask, i) => ({
+      title: subtask.title,
+      order: i,
+      column_id,
+      board_id,
+      parent_id: data.id,
+      completed: subtask.completed || false,
+    }));
+
+    const { data: subtasksData, error } = await supabaseBrowserClient
+      .from("tasks")
+      .insert(postData);
+  }
+
+  return data;
+}
 
 export async function updateTaskStatus({
   id,
@@ -76,4 +129,10 @@ export async function updateTaskStatus({
     .eq("id", id);
 
   if (error) throw new Error(error.message);
+}
+
+export async function deleteTask(id:string){
+  const {error} = await supabaseBrowserClient.from('tasks').delete().eq('id',id);
+
+  if(error) throw new Error(error.message);
 }
