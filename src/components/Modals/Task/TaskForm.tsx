@@ -10,19 +10,26 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { BoardWithColumns } from "@/lib/types";
+import { BoardWithColumns, Task } from "@/lib/types";
 import { TTaskValidator, TaskValidator } from "@/lib/validators/task-validator";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { X } from "lucide-react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { useCreateTask } from "./useCreateTask";
+import { useUpdateTask } from "./useEditTask";
 
 function TaskForm({
   board: { id, columns },
   closeModal,
+  task,
+  subtasks,
+  edit,
 }: {
   board: BoardWithColumns;
   closeModal: () => void;
+  task?: Task;
+  subtasks?: Task[];
+  edit?: boolean;
 }) {
   const {
     control,
@@ -31,6 +38,12 @@ function TaskForm({
     formState: { errors },
   } = useForm<TTaskValidator>({
     resolver: zodResolver(TaskValidator),
+    defaultValues: {
+      title: task?.title,
+      description: task?.description || "",
+      subtasks: subtasks,
+      column_id: task?.column_id,
+    },
   });
 
   const { fields, append, remove } = useFieldArray({
@@ -38,9 +51,19 @@ function TaskForm({
     name: "subtasks",
   });
   const { addTask, isPending } = useCreateTask();
+  const { updateTask, isUpdating } = useUpdateTask();
 
   function onSubmit(data: TTaskValidator) {
-    addTask({ ...data, board_id: id }, { onSettled: closeModal });
+    if (edit) {
+      if (task) {
+        updateTask(
+          { ...data, id: task.id, board_id: id, order: task.order },
+          { onSettled: closeModal },
+        );
+      }
+    } else {
+      addTask({ ...data, board_id: id }, { onSettled: closeModal });
+    }
   }
 
   return (
@@ -53,7 +76,7 @@ function TaskForm({
             error={errors.title?.message}
             id="task-title"
             placeholder="e.g. Take coffee break"
-            disabled={isPending}
+            disabled={isPending || isUpdating}
           />
         </div>
         <div className="space-y-2">
@@ -64,7 +87,7 @@ function TaskForm({
             id="description"
             placeholder="e.g. Take coffee break"
             className="resize-none"
-            disabled={isPending}
+            disabled={isPending || isUpdating}
           />
         </div>
         <div className="space-y-2">
@@ -82,14 +105,14 @@ function TaskForm({
                       errors.subtasks && errors.subtasks[index]?.title?.message
                     }
                     className="basis-full"
-                    disabled={isPending}
+                    disabled={isPending || isUpdating}
                   />
                   <Button
                     onClick={() => remove(index)}
                     type="button"
                     variant={"ghost"}
                     size={"icon"}
-                    disabled={isPending}
+                    disabled={isPending || isUpdating}
                   >
                     <X />
                   </Button>
@@ -100,7 +123,7 @@ function TaskForm({
               onClick={() => append({ title: "" })}
               type="button"
               variant="secondary"
-              disabled={isPending}
+              disabled={isPending || isUpdating}
             >
               + Add New Subtask
             </Button>
@@ -113,7 +136,7 @@ function TaskForm({
               <Select
                 onValueChange={(v) => field.onChange(Number(v))}
                 defaultValue={field.value ? field.value.toString() : ""}
-                disabled={isPending}
+                disabled={isPending || isUpdating}
               >
                 <SelectTrigger id="select-column">
                   <SelectValue placeholder="Select a column" />
@@ -143,7 +166,9 @@ function TaskForm({
             </div>
           )}
         </div>
-        <Button disabled={isPending}>Create Task</Button>
+        <Button disabled={isPending || isUpdating}>
+          {edit ? "Save Changes" : "Create Task"}
+        </Button>
       </div>
     </form>
   );
