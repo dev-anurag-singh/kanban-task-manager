@@ -1,6 +1,6 @@
 "use client";
 import stc from "string-to-color";
-import type { Column, Tasks } from "@/lib/types";
+import type { BoardWithColumns, Column, Tasks } from "@/lib/types";
 import Task from "./Task";
 import { ScrollArea } from "../ui/scroll-area";
 import { cn } from "@/lib/utils";
@@ -14,9 +14,10 @@ import { useMemo } from "react";
 interface ColumnProps {
   column: Column;
   tasks: Tasks;
+  board:BoardWithColumns
 }
 
-function Column({ column: { title, id }, tasks }: ColumnProps) {
+function Column({ column: { title, id }, tasks,board }: ColumnProps) {
   const childTasks = useMemo(() => {
     return tasks.filter((t) => !t.parent_id);
   }, [tasks]);
@@ -56,6 +57,7 @@ function Column({ column: { title, id }, tasks }: ColumnProps) {
               <Task
                 key={task.id}
                 task={task}
+                board={board}
                 subtasks={tasks.filter((t) => t.parent_id === task.id)}
               />
             ))}

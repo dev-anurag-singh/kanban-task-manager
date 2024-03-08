@@ -109,6 +109,7 @@ function ColumnContainer({ board, columns, tasks }: ColumnContainerProps) {
                 key={column.id}
                 column={column}
                 tasks={tasksByColumn[column.id]}
+                board={board}
               />
             ))}
           </SortableContext>
@@ -117,7 +118,7 @@ function ColumnContainer({ board, columns, tasks }: ColumnContainerProps) {
         {createPortal(
           <DragOverlay>
             {activeTask && (
-              <Task task={activeTask.task} subtasks={activeTask.subtasks} />
+              <Task board={board} task={activeTask.task} subtasks={activeTask.subtasks} />
             )}
           </DragOverlay>,
           document.body,
