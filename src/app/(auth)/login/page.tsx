@@ -29,6 +29,10 @@ function SignupPage() {
     reset,
   } = useForm<TSignInValidator>({
     resolver: zodResolver(SignInValidator),
+    defaultValues:{
+      email:'alex@example.com',
+      password:'pass1234'
+    }
   });
 
   async function onSubmit({ email, password }: TSignInValidator) {
