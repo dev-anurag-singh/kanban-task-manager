@@ -11,7 +11,7 @@ function Navbar({ board }: { board: BoardWithColumns }) {
   return (
     <div className="flex border-b bg-muted">
       <div className="flex grow items-center p-4 md:px-6 ">
-        <Link href="/app" className="mr-4 md:hidden ">
+        <Link href="/" className="mr-4 md:hidden ">
           <LogoSmall />
         </Link>
         <div className="mr-auto flex items-center gap-1">
