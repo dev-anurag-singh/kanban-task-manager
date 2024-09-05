@@ -12,7 +12,7 @@ export function useDeleteBoard() {
     onSuccess: () => {
       toast.success("Board deleted successfully");
       queryClient.invalidateQueries({ queryKey: ["boards"] });
-      router.push("/app");
+      router.push("/");
     },
     onError: (err) => {
       toast.error(err.message);

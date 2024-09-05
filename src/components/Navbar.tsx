@@ -7,7 +7,7 @@ function Navbar() {
   return (
     <div className="flex border-b bg-muted md:hidden">
       <div className="flex grow items-center justify-between p-4 md:px-6">
-        <Link href="/app" className="mr-8 ">
+        <Link href="/" className="mr-8 ">
           <LogoFull />
         </Link>
         <div className="mr-2 flex items-center gap-1">

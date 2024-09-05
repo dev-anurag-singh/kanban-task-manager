@@ -11,7 +11,7 @@ export function useLogin() {
     mutationFn: loginApi,
     onSuccess: (data) => {
       queryClient.setQueryData(["user"], data.user);
-      router.push("/app");
+      router.push("/");
     },
     onError: (err) => toast.error(err.message),
   });

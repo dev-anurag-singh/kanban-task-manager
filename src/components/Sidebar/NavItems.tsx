@@ -45,11 +45,11 @@ function NavItems() {
                 "relative mr-5 flex h-12 items-center gap-3 overflow-hidden rounded-r-full px-6 py-4 capitalize transition-colors after:absolute after:left-0 after:top-0 after:h-full after:w-0 after:bg-secondary after:transition-all after:duration-300 hover:text-secondary-foreground hover:after:w-full lg:mr-6 lg:px-8",
                 {
                   "pointer-events-none text-primary-foreground after:w-full after:bg-primary":
-                    pathname === `/app/${id}`,
+                    pathname === `/board/${id}`,
                 },
               )}
               key={id}
-              href={`/app/${id}`}
+              href={`/board/${id}`}
             >
               <span className="z-10">
                 <BoardIcon />

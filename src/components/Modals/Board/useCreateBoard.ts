@@ -12,7 +12,7 @@ export function useCreateBoard() {
     onSuccess: (data) => {
       toast.success("Board created successfully");
       queryClient.invalidateQueries({ queryKey: ["boards"] });
-      router.push(`/app/${data.id}`);
+      router.push(`/board/${data.id}`);
     },
     onError: (err) => toast.error(err.message),
   });
