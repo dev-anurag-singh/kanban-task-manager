@@ -26,10 +26,7 @@ export default function RootLayout({
     <html lang="en" className="h-full" suppressHydrationWarning>
       <body className={cn("h-full overflow-hidden", font.className)}>
         <Provider>
-          <div className="flex h-full">
-            <Sidebar />
-            {children}
-          </div>
+          {children}
         </Provider>
       </body>
     </html>

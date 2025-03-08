@@ -10,11 +10,11 @@ import ThemeToggler from "./ThemeToggler";
 function SidebarDropDown({ align }: { align?: "start" | "end" }) {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="transition-transform data-[state=open]:rotate-180 md:hidden">
+      <DropdownMenuTrigger className="transition-transform data-[state=open]:rotate-180">
         <ChevronDown className="-mb-0.5 h-5 w-5" />
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        className="text-muted-foreground md:hidden"
+        className="text-muted-foreground"
         sideOffset={30}
         side="bottom"
         align={align || "start"}

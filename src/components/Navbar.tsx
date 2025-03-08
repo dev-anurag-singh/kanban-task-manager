@@ -5,7 +5,7 @@ import { LogoFull } from "./Logo";
 
 function Navbar() {
   return (
-    <div className="flex border-b bg-muted md:hidden">
+    <div className="flex border-b bg-muted">
       <div className="flex grow items-center justify-between p-4 md:px-6">
         <Link href="/" className="mr-8 ">
           <LogoFull />
@@ -14,7 +14,7 @@ function Navbar() {
           <h1 className="max-w-[9rem] overflow-hidden text-ellipsis whitespace-nowrap text-lg md:max-w-[12rem] lg:max-w-xs">
             Select a board
           </h1>
-          <div className="inline-flex md:hidden">
+          <div className="inline-flex">
             <SidebarDropDown align="end" />
           </div>
         </div>
