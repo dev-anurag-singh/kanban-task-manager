@@ -18,10 +18,10 @@ import {
   SignInValidator,
   TSignInValidator,
 } from "@/lib/validators/auth-credentails-validator";
-import { useLogin } from "@/hooks/useLogin";
+import { GoogleLoginButton } from "@/components/auth/GoogleLoginButton";
+import { Separator } from "@/components/ui/separator";
 
 function SignupPage() {
-  const { login, isPending } = useLogin();
   const {
     register,
     handleSubmit,
@@ -29,30 +29,25 @@ function SignupPage() {
     reset,
   } = useForm<TSignInValidator>({
     resolver: zodResolver(SignInValidator),
-    defaultValues:{
-      email:'alex@example.com',
-      password:'pass1234'
-    }
+    defaultValues: {
+      email: "alex@example.com",
+      password: "pass1234",
+    },
   });
 
   async function onSubmit({ email, password }: TSignInValidator) {
-    login(
-      { email, password },
-      {
-        onSettled: () => reset(),
-      },
-    );
+    console.log(email, password);
   }
 
   return (
     <>
       <Card className="border-0">
-        <CardHeader className="space-y-2">
+        <CardHeader className="space-y-2 text-center">
           <CardTitle>Welcome back</CardTitle>
           <CardDescription>Enter your credentails to get back!</CardDescription>
         </CardHeader>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <CardContent>
+        <CardContent>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col gap-6">
               <div className="space-y-2">
                 <Label htmlFor="email">Email Address</Label>
@@ -73,25 +68,32 @@ function SignupPage() {
                   placeholder="At least 8 characters"
                 />
               </div>
-            </div>
-          </CardContent>
-          <CardFooter className="flex-col items-stretch">
-            <Button type="submit" disabled={isPending}>
-              Login
-            </Button>
-            <div className="mt-3 text-center text-base">
-              <span>Don&apos; have an account?</span>
-              <Button
-                asChild
-                variant="link"
-                size="sm"
-                className="h-auto px-2 text-lg"
-              >
-                <Link href="/signup">Signup</Link>
+              <Button className="w-full" type="submit">
+                Login
               </Button>
             </div>
-          </CardFooter>
-        </form>
+          </form>
+        </CardContent>
+        <CardFooter className="flex-col">
+          <div className="relative mb-8 w-full">
+            <Separator />
+            <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-card px-2 text-muted-foreground">
+              or
+            </span>
+          </div>
+          <GoogleLoginButton />
+          <div className="mt-4 text-center text-base">
+            <span>Don&apos; have an account?</span>
+            <Button
+              asChild
+              variant="link"
+              size="sm"
+              className="h-auto px-2 text-lg"
+            >
+              <Link href="/signup">Signup</Link>
+            </Button>
+          </div>
+        </CardFooter>
       </Card>
     </>
   );
