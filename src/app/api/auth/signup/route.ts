@@ -1,7 +1,8 @@
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { signupSchema } from "@/lib/validators/signup-schema";
+import { generateVerificationToken } from "@/utils/tokens";
 
 export async function POST(req: Request) {
   const body = await req.json();
@@ -41,7 +42,8 @@ export async function POST(req: Request) {
     },
   });
 
-  // Send verification token email
+  // Generate & Send verification token email
+  const verificationToken = await generateVerificationToken(email);
 
-  return NextResponse.json({ user });
+  return NextResponse.json({ success: "Confirmation email sent!" });
 }

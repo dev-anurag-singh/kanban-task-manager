@@ -1,8 +1,12 @@
+// "use client";
 import Icon from "@/icons/landing.svg";
 import CreateBoard from "@/components/Modals/Board/CreateBoard";
 import Navbar from "@/components/Navbar";
+import { signOut } from "next-auth/react";
+import { auth } from "@/auth";
 
-function Page() {
+async function Page() {
+  const session = await auth();
   return (
     <div className="flex h-full w-full flex-col">
       {/* <Navbar /> */}
@@ -12,6 +16,7 @@ function Page() {
           <p className="text-center">
             Add your tasks or create a new Board to get started.
           </p>
+          {/* <button onClick={() => signOut()}>signout</button> */}
           {/* <CreateBoard /> */}
         </div>
       </div>
