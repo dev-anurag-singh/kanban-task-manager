@@ -11,7 +11,7 @@ export const publicRoutes: string[] = ["/"];
  * @type {string[]}
  * Example: login or registration pages.
  */
-export const authRoutes: string[] = ["/login", "/signup"];
+export const authRoutes: string[] = ["/login", "/signup", "/verify-email"];
 
 /**
  * Prefix for API routes related to authentication.
