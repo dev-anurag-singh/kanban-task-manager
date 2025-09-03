@@ -83,21 +83,18 @@ module.exports = {
         "1.5rem",
         {
           fontWeight: "700",
-          lineHeight: "normal",
         },
       ],
       xl: [
         "1.125rem",
         {
           fontWeight: "700",
-          lineHeight: "normal",
         },
       ],
       lg: [
         "0.9375rem",
         {
           fontWeight: "700",
-          lineHeight: "normal",
         },
       ],
       md: [
@@ -105,7 +102,6 @@ module.exports = {
         {
           fontWeight: "700",
           letterSpacing: "2.4px",
-          lineHeight: "normal",
         },
       ],
       base: [
