@@ -48,6 +48,7 @@
     "react-hook-form": "^7.49.1",
     "react-hot-toast": "^2.4.1",
     "react-icons": "^5.5.0",
+    "react-spinners": "^0.17.0",
     "resend": "^6.0.2",
     "string-to-color": "^2.2.2",
     "tailwind-merge": "^2.1.0",
