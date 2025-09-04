@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useSignup } from "@/components/auth/hooks/useSignup";
-import toast from "react-hot-toast";
 
 const SignupSchema = z.object({
   email: z
@@ -57,7 +56,7 @@ export const SignupForm = () => {
             placeholder="At least 8 characters"
           />
         </div>
-        <Button type="submit" className="mt-2 w-full">
+        <Button type="submit" disabled={isPending} className="mt-2 w-full">
           Create Account
         </Button>
       </div>

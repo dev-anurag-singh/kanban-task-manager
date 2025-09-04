@@ -18,8 +18,9 @@ export function useSignup() {
         throw new Error(error);
       }
     },
-    onSuccess: (data) => {
-      router.push("/login");
+    onSuccess: () => {
+      toast.success(`We've sent a verification link to your email.`);
+      router.push("/verify-email");
     },
     onError: (err) => toast.error(err.message),
   });

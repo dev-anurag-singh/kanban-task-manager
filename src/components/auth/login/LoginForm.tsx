@@ -26,7 +26,7 @@ export const LoginForm = () => {
     resolver: zodResolver(SignInSchema),
     defaultValues: {
       email: "alex@example.com",
-      password: "Anurag@7664",
+      password: "Tg@ry745",
     },
   });
 
@@ -44,11 +44,12 @@ export const LoginForm = () => {
       router.push(callbackUrl || DEFAULT_LOGIN_REDIRECT);
     } else {
       if (res.error === "AccessDenied") {
-        router.push("/verify-email");
+        router.push(`/verify-email?email=${encodeURIComponent(email)}`);
       } else {
         toast.error("Invalid Credentials");
       }
     }
+    setIsPending(false);
   }
 
   return (
@@ -59,6 +60,7 @@ export const LoginForm = () => {
           <Input
             {...register("email")}
             id="email"
+            disabled={isPending}
             error={errors?.email?.message}
             placeholder="e.g. alex@example.com"
           />
@@ -70,10 +72,11 @@ export const LoginForm = () => {
             error={errors?.password?.message}
             id="password"
             type="password"
+            disabled={isPending}
             placeholder="At least 8 characters"
           />
         </div>
-        <Button className="w-full" type="submit">
+        <Button disabled={isPending} className="w-full" type="submit">
           Login
         </Button>
       </div>
