@@ -15,7 +15,7 @@ import { LoginForm } from "@/components/auth/login/LoginForm";
 function LoginPage() {
   return (
     <>
-      <Card className="border-0">
+      <Card className="border-0 py-4">
         <CardHeader className="space-y-2 text-center">
           <CardTitle>Welcome back</CardTitle>
           <CardDescription>Enter your credentails to get back!</CardDescription>

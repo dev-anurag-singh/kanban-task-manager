@@ -6,7 +6,6 @@ import { signOut } from "next-auth/react";
 import { auth } from "@/auth";
 
 async function Page() {
-  const session = await auth();
   return (
     <div className="flex h-full w-full flex-col">
       {/* <Navbar /> */}

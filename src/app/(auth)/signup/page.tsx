@@ -15,7 +15,7 @@ import { SignupForm } from "@/components/auth/signup/SignupForm";
 function SignupPage() {
   return (
     <>
-      <Card className="border-0">
+      <Card className="border-0 py-4">
         <CardHeader className="space-y-2 text-center">
           <CardTitle>Create account</CardTitle>
           <CardDescription>

@@ -7,7 +7,7 @@ async function AuthLayout({ children }: { children: React.ReactNode }) {
         <div className="flex justify-center">
           <LogoFull />
         </div>
-        <div className="">{children}</div>
+        {children}
       </div>
     </div>
   );
