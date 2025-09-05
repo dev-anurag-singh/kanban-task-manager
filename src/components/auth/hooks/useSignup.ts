@@ -17,10 +17,11 @@ export function useSignup() {
         const { error } = await res.json();
         throw new Error(error);
       }
+      return data.email;
     },
-    onSuccess: () => {
+    onSuccess: (email) => {
       toast.success(`We've sent a verification link to your email.`);
-      router.push("/verify-email");
+      router.push(`/verify-email?email=${encodeURIComponent(email)}`);
     },
     onError: (err) => toast.error(err.message),
   });

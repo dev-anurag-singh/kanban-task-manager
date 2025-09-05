@@ -1,5 +1,5 @@
-import { VerifyEmail } from "@/components/auth/VerifyEmail";
+import { VerifyEmailCard } from "@/components/auth/VerifyEmailCard";
 
-export default function Home() {
-  return <VerifyEmail />;
+export default function VerifyEmailPage() {
+  return <VerifyEmailCard />;
 }

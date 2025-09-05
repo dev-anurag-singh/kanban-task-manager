@@ -3,7 +3,7 @@
  * @type {string[]}
  * Example: homepage or landing page.
  */
-export const publicRoutes: string[] = ["/"];
+export const publicRoutes: string[] = ["/", "/email-verification"];
 
 /**
  * Routes for authentication pages.
@@ -25,4 +25,4 @@ export const apiAuthPrefix: string = "/api/auth";
  * Used in middleware or after sign-in to send users to the main dashboard/homepage.
  * @type {string}
  */
-export const DEFAULT_LOGIN_REDIRECT: string = "/home";
+export const DEFAULT_LOGIN_REDIRECT: string = "/dashboard";

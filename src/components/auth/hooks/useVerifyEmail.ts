@@ -20,12 +20,12 @@ export function useVerifyEmail() {
       }
     },
     onSuccess: () => {
-      toast.success(`Your email has been verified`);
+      toast.success(`Your email has been verified. Please Login`);
       router.push("/login");
     },
     onError: (err) => {
-      toast.error(`${err.message} Request a new one below!`);
-      router.push("/verify-email");
+      toast.error(`${err.message}`);
+      router.push("/login");
     },
   });
 

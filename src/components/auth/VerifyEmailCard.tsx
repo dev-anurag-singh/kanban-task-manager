@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { validate } from "uuid";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -11,61 +9,22 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Mail, ArrowLeft, CheckCircle } from "lucide-react";
-import { BeatLoader } from "react-spinners";
 import toast from "react-hot-toast";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useVerifyEmail } from "@/components/auth/hooks/useVerifyEmail";
+import { useRouter } from "next/navigation";
 
-export const VerifyEmail = () => {
-  const [isResending, setIsResending] = useState(false);
-  const hasExecuted = useRef(false);
+export const VerifyEmailCard = () => {
   const router = useRouter();
-  const token = useSearchParams().get("token");
-  const { verifyEmail } = useVerifyEmail();
-
-  useEffect(() => {
-    if (hasExecuted.current) return;
-    if (token && validate(token)) {
-      verifyEmail(token);
-      hasExecuted.current = true;
-    }
-  }, [token, verifyEmail]);
 
   const handleResendEmail = async () => {
-    setIsResending(true);
-
     // TODO: Add a api call
     await new Promise((resolve) => setTimeout(resolve, 2000));
 
     toast(`We've sent a new verification email to your inbox.`);
-
-    setIsResending(false);
   };
 
   const handleBackToLogin = () => {
     router.replace("/login");
   };
-
-  if (token && validate(token)) {
-    return (
-      <Card className="border-0 py-4">
-        <CardHeader className="space-y-4 text-center">
-          <div className="flex w-full items-center justify-center">
-            <BeatLoader />
-          </div>
-          <div className="space-y-2">
-            <CardTitle className="text-2xl font-semibold">
-              Verifying your email
-            </CardTitle>
-            <CardDescription className="text-muted-foreground">
-              Please wait while we verify your email address. This should only
-              take a moment.
-            </CardDescription>
-          </div>
-        </CardHeader>
-      </Card>
-    );
-  }
 
   return (
     <Card className="border-0 py-4">
@@ -99,22 +58,9 @@ export const VerifyEmail = () => {
         </div>
 
         <div className="space-y-3">
-          <Button
-            onClick={handleResendEmail}
-            disabled={isResending}
-            className="w-full"
-          >
-            {isResending ? (
-              <>
-                <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
-                Sending...
-              </>
-            ) : (
-              <>
-                <Mail className="mr-2 h-4 w-4" />
-                Resend verification email
-              </>
-            )}
+          <Button onClick={handleResendEmail} className="w-full">
+            <Mail className="mr-2 h-4 w-4" />
+            Resend verification email
           </Button>
 
           <Button
